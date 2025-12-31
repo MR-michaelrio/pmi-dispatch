@@ -4,27 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('ambulances', function (Blueprint $table) {
             $table->id();
+            $table->string('plate_number');
+            $table->enum('status', ['ready', 'on_duty', 'maintenance'])->default('ready');
 
-            // Identitas Ambulans
-            $table->string('code')->unique();        // GMCI-A01
-            $table->string('plate_number');          // B 1234 ABC
-            $table->string('type');                  // ICU / BASIC / NICU
-
-            // Status Operasional
-            $table->enum('status', [
-                'ready',
-                'on_duty',
-                'maintenance'
-            ])->default('ready');
-
-            // Lokasi terakhir (opsional, untuk pengembangan GPS)
-            $table->string('last_location')->nullable();
+            // 🔥 LOKASI REALTIME
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
 
             $table->timestamps();
         });
@@ -35,3 +25,4 @@ return new class extends Migration
         Schema::dropIfExists('ambulances');
     }
 };
+

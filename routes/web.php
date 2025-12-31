@@ -5,15 +5,18 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AmbulanceController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\DispatchController;
+use App\Http\Controllers\Admin\MapController;
 
 /*
 |--------------------------------------------------------------------------
 | PUBLIC
 |--------------------------------------------------------------------------
 */
-Route::get('/', fn () => view('home'))->name('home');
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +25,9 @@ require __DIR__.'/auth.php';
 */
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', fn () => view('dashboard'))
-        ->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
     /*
     |--------------------------------------------------------------------------
@@ -57,8 +61,11 @@ Route::middleware(['auth'])->group(function () {
             ->name('dispatches.destroy');
 
         // ✅ EXPORT PDF
-        Route::get('dispatches-export/pdf', [DispatchController::class, 'exportPdf'])
+        Route::get('dispatches/export/pdf', [DispatchController::class, 'exportPdf'])
             ->name('dispatches.export.pdf');
+
+        // ✅ MAPS (INI YANG SEBELUMNYA HILANG)
+        Route::get('maps', [MapController::class, 'index'])
+            ->name('maps');
     });
 });
-

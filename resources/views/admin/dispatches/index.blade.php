@@ -3,69 +3,116 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-6 py-6">
 
-    <div class="flex justify-between mb-6">
-        <h1 class="text-2xl font-bold">🚨 Dispatch Ambulans</h1>
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">
+            🚨 Dispatch Ambulans
+        </h1>
 
-        <a href="{{ route('admin.dispatches.create') }}"
-           class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
-            + Dispatch Baru
-        </a>
+        <div class="flex gap-2">
+            <!-- EXPORT PDF -->
+            <a href="{{ route('admin.dispatches.export.pdf') }}"
+               class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm shadow">
+                📄 Export PDF
+            </a>
+
+            <!-- DISPATCH BARU -->
+            <a href="{{ route('admin.dispatches.create') }}"
+               class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm shadow">
+                ➕ Dispatch Baru
+            </a>
+        </div>
     </div>
 
+    <!-- TABLE -->
     <div class="bg-white rounded-xl shadow overflow-hidden">
         <table class="w-full text-sm">
-            <thead class="bg-gray-100">
+            <thead class="bg-gray-100 text-gray-700">
                 <tr>
-                    <th class="px-4 py-3">Pasien</th>
-                    <th class="px-4 py-3">Lokasi</th>
-                    <th class="px-4 py-3">Driver</th>
-                    <th class="px-4 py-3">Ambulans</th>
-                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3 text-left">Pasien</th>
+                    <th class="px-4 py-3 text-left">Lokasi</th>
+                    <th class="px-4 py-3 text-left">Driver</th>
+                    <th class="px-4 py-3 text-left">Ambulans</th>
+                    <th class="px-4 py-3 text-left">Status</th>
                     <th class="px-4 py-3 text-center">Aksi</th>
                 </tr>
             </thead>
 
             <tbody>
-            @forelse($dispatches as $d)
-                <tr class="border-t">
+                @forelse($dispatches as $d)
+                <tr class="border-t hover:bg-gray-50">
+
+                    <!-- PASIEN -->
                     <td class="px-4 py-3">
-                        <strong>{{ $d->patient_name }}</strong><br>
-                        <span class="text-xs">{{ $d->patient_condition }}</span>
+                        <div class="font-semibold">{{ $d->patient_name }}</div>
+                        <div class="text-xs text-gray-500">
+                            {{ strtoupper($d->patient_condition) }}
+                        </div>
                     </td>
 
-                    <td class="px-4 py-3">{{ $d->pickup_address }}</td>
-                    <td class="px-4 py-3">{{ $d->driver?->name ?? '-' }}</td>
-                    <td class="px-4 py-3">{{ $d->ambulance?->plate_number ?? '-' }}</td>
-                    <td class="px-4 py-3 font-semibold">{{ $d->status }}</td>
+                    <!-- LOKASI -->
+                    <td class="px-4 py-3">
+                        {{ $d->pickup_address }}
+                    </td>
 
-                    <td class="px-4 py-3 text-center space-x-2">
-                        @if($d->status !== 'completed')
-                        <form method="POST" action="{{ route('admin.dispatches.next', $d) }}" class="inline">
-                            @csrf
-                            <button class="bg-blue-600 text-white px-3 py-1 rounded text-xs">
-                                NEXT
-                            </button>
-                        </form>
-                        @endif
+                    <!-- DRIVER -->
+                    <td class="px-4 py-3">
+                        {{ $d->driver?->name ?? '-' }}
+                    </td>
 
-                        <form method="POST" action="{{ route('admin.dispatches.destroy', $d) }}"
-                              class="inline"
-                              onsubmit="return confirm('Hapus dispatch ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="bg-gray-600 text-white px-3 py-1 rounded text-xs">
-                                HAPUS
-                            </button>
-                        </form>
+                    <!-- AMBULANS -->
+                    <td class="px-4 py-3">
+                        {{ $d->ambulance?->plate_number ?? '-' }}
+                    </td>
+
+                    <!-- STATUS -->
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 rounded text-xs font-semibold
+                            @if($d->status === 'completed') bg-green-100 text-green-700
+                            @elseif($d->status === 'assigned') bg-blue-100 text-blue-700
+                            @else bg-yellow-100 text-yellow-700 @endif">
+                            {{ str_replace('_',' ', strtoupper($d->status)) }}
+                        </span>
+                    </td>
+
+                    <!-- AKSI -->
+                    <td class="px-4 py-3 text-center">
+                        <div class="flex justify-center gap-2">
+
+                            @if($d->status !== 'completed')
+                            <!-- NEXT -->
+                            <form method="POST"
+                                  action="{{ route('admin.dispatches.next', $d) }}">
+                                @csrf
+                                <button type="submit"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs">
+                                    ▶ Next
+                                </button>
+                            </form>
+                            @endif
+
+                            <!-- DELETE -->
+                            <form method="POST"
+                                  action="{{ route('admin.dispatches.destroy', $d) }}"
+                                  onsubmit="return confirm('Yakin hapus dispatch ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">
+                                    🗑 Hapus
+                                </button>
+                            </form>
+
+                        </div>
                     </td>
                 </tr>
-            @empty
+                @empty
                 <tr>
                     <td colspan="6" class="px-4 py-6 text-center text-gray-500">
-                        Belum ada dispatch
+                        Belum ada data dispatch
                     </td>
                 </tr>
-            @endforelse
+                @endforelse
             </tbody>
         </table>
     </div>

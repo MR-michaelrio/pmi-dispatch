@@ -2,180 +2,147 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>GMCI Ambulance Dispatch</title>
+    <title>GMCI Dispatch | Global Medical Care Indonesia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Animasi halus -->
     <style>
-        :root {
-            --primary: #2563eb;
-            --bg: #f1f5f9;
-            --card: #ffffff;
-            --text: #0f172a;
-            --muted: #64748b;
+        .fade-up {
+            animation: fadeUp 1s ease-out both;
         }
-
-        * {
-            box-sizing: border-box;
-            font-family: "Segoe UI", Arial, sans-serif;
-        }
-
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 28px 24px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-        header p {
-            margin-top: 6px;
-            font-size: 15px;
-            opacity: 0.9;
-        }
-
-        main {
-            max-width: 1100px;
-            margin: auto;
-            padding: 32px 24px;
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .hero h2 {
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .hero p {
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        .hero a {
-            display: inline-block;
-            margin-top: 20px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 15px;
-        }
-
-        .hero a:hover {
-            background: #1e40af;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 48px;
-        }
-
-        .card {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .card h3 {
-            margin: 0 0 10px;
-            font-size: 17px;
-        }
-
-        .card p {
-            margin: 0;
-            font-size: 14px;
-            color: var(--muted);
-        }
-
-        footer {
-            margin-top: 60px;
-            padding: 20px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--muted);
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
-<body>
 
-<header>
-    <h1>🚑 GMCI Ambulance Dispatch</h1>
-    <p>Global Medical Care Indonesia</p>
-</header>
+<body class="bg-gradient-to-br from-slate-50 via-white to-slate-100 text-gray-800">
 
-<main>
+    <!-- HEADER -->
+    <header class="bg-white/80 backdrop-blur border-b shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+            <!-- LOGO + NAME -->
+            <div class="flex items-center gap-4">
+                <img src="/logo-gmci.png" alt="GMCI Logo" class="h-10">
+                <div>
+                    <div class="font-bold text-lg text-gray-900">
+                        Global Medical Care Indonesia
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        Sistem Dispatch Ambulans
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGIN -->
+            <a href="{{ route('login') }}"
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm shadow">
+                🔐 Login Petugas
+            </a>
+        </div>
+    </header>
 
     <!-- HERO -->
-    <section class="hero">
-        <div>
-            <h2>Sistem Dispatch Ambulans Terintegrasi</h2>
-            <p>
-                GMCI Ambulance Dispatch adalah sistem untuk mengelola armada ambulans,
-                driver, dan panggilan darurat secara cepat, akurat, dan terkoordinasi.
-                Dirancang untuk mendukung misi kemanusiaan Global Medical Care Indonesia.
+    <section class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+
+        <!-- TEXT -->
+        <div class="fade-up">
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-6">
+                Sistem Dispatch Ambulans<br>
+                <span class="text-emerald-600">Global Medical Care Indonesia</span>
+            </h1>
+
+            <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                Aplikasi ini digunakan untuk mengelola dan memantau
+                <strong>penugasan ambulans secara real-time</strong>,
+                mulai dari panggilan darurat, pengantaran pasien,
+                hingga evakuasi jenazah.
             </p>
 
-            <a href="/login">🔐 Login Admin / Dispatcher</a>
+            <p class="text-gray-600 mb-8">
+                Dikembangkan untuk mendukung misi kemanusiaan
+                <strong>Yayasan Global Medical Care Indonesia</strong>
+                dalam memberikan pelayanan medis yang cepat, tepat,
+                dan terkoordinasi bagi masyarakat.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+                <a href="{{ route('login') }}"
+                   class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow">
+                    🚑 Masuk Sistem Dispatch
+                </a>
+
+                <a href="#tentang"
+                   class="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold">
+                    ℹ️ Tentang GMCI
+                </a>
+            </div>
         </div>
 
-        <div class="card">
-            <h3>📌 Status Sistem</h3>
-            <p>Online & Siap Digunakan</p>
+        <!-- ILLUSTRATION -->
+        <div class="fade-up text-center">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="text-6xl mb-4">🚑</div>
+                <div class="font-bold text-xl mb-2">Ambulance Dispatch System</div>
+                <div class="text-gray-500 text-sm">
+                    Real-time • Terintegrasi • Profesional
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- FEATURES -->
-    <section class="card-grid">
-        <div class="card">
-            <h3>🚑 Manajemen Ambulans</h3>
-            <p>Kelola data ambulans, status, dan kesiapan armada secara real-time.</p>
-        </div>
+    <!-- TENTANG -->
+    <section id="tentang" class="bg-white border-t">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-8">
 
-        <div class="card">
-            <h3>👨‍✈️ Manajemen Driver</h3>
-            <p>Atur driver, jadwal, dan penugasan dengan rapi dan terstruktur.</p>
-        </div>
+            <div class="fade-up">
+                <div class="text-3xl mb-3">⚡</div>
+                <h3 class="font-bold text-lg mb-2">Respon Cepat</h3>
+                <p class="text-gray-600 text-sm">
+                    Sistem dirancang untuk mempercepat proses
+                    penugasan ambulans dan koordinasi lapangan.
+                </p>
+            </div>
 
-        <div class="card">
-            <h3>📞 Dispatch Panggilan</h3>
-            <p>Proses panggilan darurat dan distribusi ambulans dengan cepat.</p>
-        </div>
+            <div class="fade-up">
+                <div class="text-3xl mb-3">🛰️</div>
+                <h3 class="font-bold text-lg mb-2">Monitoring Real-time</h3>
+                <p class="text-gray-600 text-sm">
+                    Status ambulans, driver, dan dispatch
+                    dapat dipantau secara langsung.
+                </p>
+            </div>
 
-        <div class="card">
-            <h3>📊 Pelaporan</h3>
-            <p>Rekap aktivitas layanan untuk evaluasi dan peningkatan kualitas.</p>
+            <div class="fade-up">
+                <div class="text-3xl mb-3">❤️</div>
+                <h3 class="font-bold text-lg mb-2">Misi Kemanusiaan</h3>
+                <p class="text-gray-600 text-sm">
+                    Mendukung pelayanan kesehatan dan sosial
+                    bagi masyarakat yang membutuhkan.
+                </p>
+            </div>
+
         </div>
     </section>
 
-</main>
-
-<footer>
-    © {{ date('Y') }} Global Medical Care Indonesia · Ambulance Dispatch System
-</footer>
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300">
+        <div class="max-w-7xl mx-auto px-6 py-8 text-center text-sm">
+            © {{ date('Y') }} Global Medical Care Indonesia.<br>
+            Sistem Dispatch Ambulans — Untuk Kemanusiaan.
+        </div>
+    </footer>
 
 </body>
 </html>

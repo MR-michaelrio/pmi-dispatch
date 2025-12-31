@@ -8,25 +8,19 @@ use App\Models\Dispatch;
 use App\Models\Driver;
 use App\Models\Ambulance;
 use App\Models\DispatchLog;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DispatchController extends Controller
 {
-    /**
-     * LIST DISPATCH
-     */
     public function index()
     {
-        $dispatches = Dispatch::with(['driver','ambulance'])
-            ->latest()
+        $dispatches = Dispatch::with(['driver','ambulance','logs'])
+            ->orderByDesc('created_at')
             ->get();
 
         return view('admin.dispatches.index', compact('dispatches'));
     }
 
-    /**
-     * FORM CREATE
-     */
     public function create()
     {
         return view('admin.dispatches.create', [
@@ -35,15 +29,11 @@ class DispatchController extends Controller
         ]);
     }
 
-    /**
-     * STORE DISPATCH
-     */
     public function store(Request $request)
     {
         $dispatch = Dispatch::create($request->validate([
             'patient_name' => 'required',
             'patient_condition' => 'required',
-            'patient_phone' => 'nullable',
             'pickup_address' => 'required',
             'destination' => 'nullable',
             'driver_id' => 'required',
@@ -53,62 +43,61 @@ class DispatchController extends Controller
             'assigned_at' => now(),
         ]);
 
-        Driver::where('id',$dispatch->driver_id)
-            ->update(['status'=>'on_duty']);
+        Driver::where('id', $dispatch->driver_id)->update(['status'=>'on_duty']);
+        Ambulance::where('id', $dispatch->ambulance_id)->update(['status'=>'on_duty']);
 
-        Ambulance::where('id',$dispatch->ambulance_id)
-            ->update(['status'=>'on_duty']);
+        DispatchLog::create([
+            'dispatch_id' => $dispatch->id,
+            'status' => 'assigned',
+            'note' => 'Dispatch dibuat'
+        ]);
 
-        return redirect()
-            ->route('admin.dispatches.index')
-            ->with('success','Dispatch berhasil dibuat');
+        return redirect()->route('admin.dispatches.index');
     }
 
-    /**
-     * NEXT STATUS
-     */
     public function next(Dispatch $dispatch)
     {
         $flow = [
-            'assigned',
-            'enroute_pickup',
-            'on_scene',
-            'enroute_hospital',
-            'completed'
+            'assigned' => 'enroute_pickup',
+            'enroute_pickup' => 'on_scene',
+            'on_scene' => 'enroute_hospital',
+            'enroute_hospital' => 'completed',
         ];
 
-        $currentIndex = array_search($dispatch->status, $flow);
-        $nextStatus = $flow[$currentIndex + 1] ?? null;
+        if (!isset($flow[$dispatch->status])) {
+            return back();
+        }
 
-        if ($nextStatus) {
-            $dispatch->update(['status'=>$nextStatus]);
+        $dispatch->update(['status' => $flow[$dispatch->status]]);
+
+        DispatchLog::create([
+            'dispatch_id' => $dispatch->id,
+            'status' => $dispatch->status,
+        ]);
+
+        if ($dispatch->status === 'completed') {
+            $dispatch->ambulance->update(['status'=>'ready']);
+            $dispatch->driver->update(['status'=>'available']);
         }
 
         return back();
     }
 
-    /**
-     * DELETE DISPATCH
-     */
     public function destroy(Dispatch $dispatch)
     {
+        $dispatch->logs()->delete();
         $dispatch->delete();
-        return back()->with('success','Dispatch dihapus');
+
+        return back();
     }
 
-    /**
-     * EXPORT PDF
-     */
+    // ✅ EXPORT PDF
     public function exportPdf()
     {
-        $dispatches = Dispatch::with(['driver','ambulance'])
-            ->latest()
-            ->get();
+        $dispatches = Dispatch::with(['driver','ambulance'])->get();
 
-        $pdf = PDF::loadView('admin.dispatches.pdf', compact('dispatches'))
-            ->setPaper('a4','landscape');
+        $pdf = Pdf::loadView('admin.dispatches.pdf', compact('dispatches'));
 
-        return $pdf->download('laporan-dispatch.pdf');
+        return $pdf->download('dispatch-report.pdf');
     }
 }
-

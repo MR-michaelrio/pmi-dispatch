@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ambulance extends Model
 {
-    protected $table = 'ambulances';
+    use HasFactory;
 
     protected $fillable = [
-        'code',
         'plate_number',
-        'type',
         'status',
-        'last_location',
+        'latitude',
+        'longitude',
     ];
 }
