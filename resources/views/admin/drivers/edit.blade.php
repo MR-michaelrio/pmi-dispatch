@@ -16,15 +16,29 @@
         @csrf
         @method('PUT')
 
-        <input name="name" value="{{ $driver->name }}" class="w-full border rounded p-2" required>
-        <input name="phone" value="{{ $driver->phone }}" class="w-full border rounded p-2">
-        <input name="license_number" value="{{ $driver->license_number }}" class="w-full border rounded p-2">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Driver</label>
+            <input name="name" value="{{ $driver->name }}" class="w-full border rounded p-2" required>
+        </div>
 
-        <select name="status" class="w-full border rounded p-2">
-            <option value="available" {{ $driver->status==='available'?'selected':'' }}>Available</option>
-            <option value="on_duty" {{ $driver->status==='on_duty'?'selected':'' }}>On Duty</option>
-            <option value="inactive" {{ $driver->status==='inactive'?'selected':'' }}>Inactive</option>
-        </select>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">No HP</label>
+            <input name="phone" value="{{ $driver->phone }}" class="w-full border rounded p-2">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">No SIM</label>
+            <input name="license_number" value="{{ $driver->license_number }}" class="w-full border rounded p-2">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <select name="status" class="w-full border rounded p-2">
+                <option value="available" {{ $driver->status==='available'?'selected':'' }}>Available</option>
+                <option value="on_duty" {{ $driver->status==='on_duty'?'selected':'' }}>On Duty</option>
+                <option value="inactive" {{ $driver->status==='inactive'?'selected':'' }}>Inactive</option>
+            </select>
+        </div>
 
         <div class="flex justify-between">
             <a href="{{ route('admin.drivers.index') }}" class="text-gray-600">← Kembali</a>

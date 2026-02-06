@@ -13,6 +13,7 @@
                 <a href="{{ route('admin.ambulances.index') }}">Ambulance</a>
                 <a href="{{ route('admin.drivers.index') }}">Driver</a>
                 <a href="{{ route('admin.dispatches.index') }}">Dispatch</a>
+                <a href="{{ route('admin.patient-requests.index') }}">📋 Permintaan</a>
                 <a href="{{ route('admin.maps') }}">🗺️ Maps</a>
             @endif
         </div>

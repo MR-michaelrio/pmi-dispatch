@@ -26,6 +26,7 @@ class DispatchController extends Controller
         return view('admin.dispatches.create', [
             'drivers' => Driver::where('status','available')->get(),
             'ambulances' => Ambulance::where('status','ready')->get(),
+            'patientRequest' => null, // Will be populated when coming from patient request
         ]);
     }
 
@@ -51,6 +52,15 @@ class DispatchController extends Controller
             'status' => 'assigned',
             'note' => 'Dispatch dibuat'
         ]);
+
+        // Update patient request if dispatch was created from one
+        if ($request->has('patient_request_id')) {
+            \App\Models\PatientRequest::where('id', $request->patient_request_id)
+                ->update([
+                    'status' => 'dispatched',
+                    'dispatch_id' => $dispatch->id,
+                ]);
+        }
 
         return redirect()->route('admin.dispatches.index');
     }

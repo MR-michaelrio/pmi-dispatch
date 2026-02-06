@@ -67,9 +67,12 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Tipe Ambulans
                 </label>
-                <input type="text" name="type" required
-                       value="{{ old('type', $ambulance->type) }}"
-                       class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <select name="type" required
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="BASIC" {{ old('type', $ambulance->type) === 'BASIC' ? 'selected' : '' }}>BASIC</option>
+                    <option value="ICU" {{ old('type', $ambulance->type) === 'ICU' ? 'selected' : '' }}>ICU</option>
+                    <option value="NICU" {{ old('type', $ambulance->type) === 'NICU' ? 'selected' : '' }}>NICU</option>
+                </select>
             </div>
 
             <!-- Status -->

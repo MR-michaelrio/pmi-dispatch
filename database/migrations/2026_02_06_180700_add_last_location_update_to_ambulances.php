@@ -4,20 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::table('ambulances', function (Blueprint $table) {
-            $table->decimal('latitude', 10, 7)->nullable()->after('status');
-            $table->decimal('longitude', 10, 7)->nullable()->after('latitude');
+            $table->timestamp('last_location_update')->nullable()->after('longitude');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('ambulances', function (Blueprint $table) {
-            $table->dropColumn(['latitude', 'longitude']);
+            $table->dropColumn('last_location_update');
         });
     }
 };
-
