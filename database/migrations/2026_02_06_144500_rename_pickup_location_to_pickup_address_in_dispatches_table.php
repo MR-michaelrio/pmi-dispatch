@@ -12,7 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('dispatches', function (Blueprint $table) {
-            $table->renameColumn('pickup_location', 'pickup_address');
+            // Jika kolom lama ada → rename
+            if (Schema::hasColumn('dispatches', 'pickup_location')) {
+                $table->renameColumn('pickup_location', 'pickup_address');
+            }
+
+            // Jika kolom baru belum ada → buat
+            if (!Schema::hasColumn('dispatches', 'pickup_address')) {
+                $table->string('pickup_address')->nullable();
+            }
+            // $table->renameColumn('pickup_location', 'pickup_address');
         });
     }
 
@@ -22,7 +31,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('dispatches', function (Blueprint $table) {
-            $table->renameColumn('pickup_address', 'pickup_location');
+           if (Schema::hasColumn('dispatches', 'pickup_address')) {
+                $table->renameColumn('pickup_address', 'pickup_location');
+            }
+
+            // $table->renameColumn('pickup_address', 'pickup_location');
         });
     }
 };
