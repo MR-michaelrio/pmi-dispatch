@@ -30,6 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('dashboard');
         });
+
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
