@@ -2,11 +2,18 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-6 py-6">
-    <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">🗺️ Peta Ambulans (Realtime)</h1>
-        <div class="flex items-center gap-2">
-            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-            <span class="text-sm text-gray-600">Auto-refresh: <span id="refresh-timer">10</span>s</span>
+    <div class="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-6 gap-4">
+        <h1 class="text-2xl font-bold text-gray-800">🗺️ Peta Ambulans (Realtime)</h1>
+        
+        <div class="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
+            <div class="flex items-center gap-2">
+                <div class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+                <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">Live</span>
+            </div>
+            <div class="w-px h-4 bg-gray-300"></div>
+            <span class="text-sm font-medium text-gray-600">
+                Refresh: <span id="refresh-timer" class="font-mono font-bold text-emerald-600">10</span>s
+            </span>
         </div>
     </div>
 
