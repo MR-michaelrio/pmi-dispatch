@@ -16,6 +16,20 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => RoleMiddleware::class,
         ]);
+
+        $middleware->redirectGuestsTo(function ($request) {
+            if ($request->is('ambulance/*') || $request->is('driver/*')) {
+                return route('ambulance.login');
+            }
+            return route('login');
+        });
+
+        $middleware->redirectUsersTo(function () {
+            if (auth()->guard('ambulance')->check()) {
+                return route('driver.dashboard');
+            }
+            return route('dashboard');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

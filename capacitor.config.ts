@@ -5,10 +5,11 @@ const config: CapacitorConfig = {
   appName: 'GMCI DISPATCH',
   webDir: 'public',
   server: {
-    // androidScheme: 'https',
-    // In production, this should be your actual live URL
-    url: 'http://127.0.0.1:8000', // IP khusus agar Emulator bisa akses Localhost Laptop
-
+    androidScheme: 'https',
+    url: 'https://dispatch.gmci.my.id',
+    allowNavigation: [
+      'dispatch.gmci.my.id'
+    ],
     cleartext: true
   }
 };

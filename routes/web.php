@@ -40,17 +40,7 @@ Route::get('/monitoring/data', [\App\Http\Controllers\MonitoringController::clas
 Route::post('/api/driver/location', [DriverLocationController::class, 'updateLocation'])
     ->middleware('auth:ambulance');  // specific guard here if we want, or just 'auth' if we configure defaults properly
 
-// Ambulance Auth Routes
-Route::prefix('ambulance')->name('ambulance.')->group(function () {
-    Route::get('login', [App\Http\Controllers\Auth\AmbulanceAuthController::class, 'showLoginForm'])
-        ->middleware('guest:ambulance')
-        ->name('login');
-    Route::post('login', [App\Http\Controllers\Auth\AmbulanceAuthController::class, 'login'])
-        ->middleware('guest:ambulance');
-    Route::post('logout', [App\Http\Controllers\Auth\AmbulanceAuthController::class, 'logout'])
-        ->middleware('auth:ambulance')
-        ->name('logout');
-});
+// Ambulance Auth Routes (Moved to bottom for clarity)
 
 require __DIR__ . '/auth.php';
 
@@ -128,16 +118,15 @@ Route::middleware(['auth'])->group(function () {
 | AMBULANCE AUTHENTICATED
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth:ambulance'])->group(function () {
-    Route::get('/driver/dashboard', [DriverDashboardController::class, 'index'])
-        ->name('driver.dashboard');
-});
+// Middleware group for ambulance auth
 
 // Ambulance Auth Routes
-Route::middleware('guest:ambulance')->group(function () {
-    Route::get('ambulance/login', [\App\Http\Controllers\Auth\AmbulanceAuthController::class, 'showLoginForm'])
-        ->name('ambulance.login');
-    Route::post('ambulance/login', [\App\Http\Controllers\Auth\AmbulanceAuthController::class, 'login']);
+Route::prefix('ambulance')->name('ambulance.')->group(function () {
+    Route::get('login', [\App\Http\Controllers\Auth\AmbulanceAuthController::class, 'showLoginForm'])
+        ->middleware('guest:ambulance')
+        ->name('login');
+    Route::post('login', [\App\Http\Controllers\Auth\AmbulanceAuthController::class, 'login'])
+        ->middleware('guest:ambulance');
 });
 
 Route::post('ambulance/logout', [\App\Http\Controllers\Auth\AmbulanceAuthController::class, 'logout'])
