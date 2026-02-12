@@ -2,10 +2,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="font-bold text-lg">
-                        🚑 <span class="hidden sm:inline">GMCI Dispatch</span><span class="sm:hidden">GMCI</span>
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+                        <img src="{{ asset('logo.png') }}" alt="GMCI Logo" class="h-10 w-auto">
+                        <span class="font-bold text-lg tracking-tight hidden sm:inline text-gray-800">GMCI Dispatch</span>
                     </a>
                 </div>
 
