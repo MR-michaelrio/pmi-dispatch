@@ -15,7 +15,7 @@ class DispatchController extends Controller
 {
     public function index()
     {
-        $dispatches = Dispatch::with(['driver','ambulance'])
+        $dispatches = Dispatch::with(['driver','ambulance','logs'])
             ->orderByDesc('created_at')
             ->get();
 
