@@ -91,7 +91,11 @@ function updateAmbulances() {
                 
                 listItem.innerHTML = `
                     <div class="flex justify-between items-start mb-1">
-                        <span class="font-bold text-gray-800">${ambulance.plate_number}</span>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-800">${ambulance.plate_number}</span>
+                            ${ambulance.dispatch && ambulance.dispatch.is_paused ? 
+                                '<span class="text-[9px] font-bold text-yellow-600 animate-pulse">⏸️ SEDANG ISTIRAHAT</span>' : ''}
+                        </div>
                         <span class="text-[10px] px-1.5 py-0.5 rounded font-bold uppercase ${ambulance.status === 'ready' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}">
                             ${ambulance.status}
                         </span>
@@ -105,10 +109,16 @@ function updateAmbulances() {
 
                 const popupContent = `
                     <div class="p-2 min-w-[200px]">
-                        <h3 class="font-bold text-lg">🚑 ${ambulance.plate_number}</h3>
-                        <p class="text-sm text-gray-600">${ambulance.code} - ${ambulance.type}</p>
+                        <div class="flex justify-between items-start border-b pb-2 mb-2">
+                             <div>
+                                <h3 class="font-bold text-lg leading-tight">🚑 ${ambulance.plate_number}</h3>
+                                <p class="text-[11px] text-gray-500">${ambulance.code} - ${ambulance.type}</p>
+                             </div>
+                             ${ambulance.dispatch && ambulance.dispatch.is_paused ? 
+                                '<div class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded border border-yellow-200 animate-pulse">PAUSED</div>' : ''}
+                        </div>
+                        
                         ${ambulance.dispatch ? `
-                            <hr class="my-2">
                             <p class="text-sm"><strong>Pasien:</strong> ${ambulance.dispatch.patient_name}</p>
                             <p class="text-sm"><strong>Status:</strong> ${ambulance.dispatch.status.replace(/_/g, ' ')}</p>
                             <p class="text-sm line-clamp-2"><strong>Jemput:</strong> ${ambulance.dispatch.pickup_address}</p>

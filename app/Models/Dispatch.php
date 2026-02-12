@@ -21,6 +21,7 @@ class Dispatch extends Model
         'driver_id',
         'ambulance_id',
         'status',
+        'is_paused',
         'assigned_at',
         'pickup_at',
         'hospital_at',

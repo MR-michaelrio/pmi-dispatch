@@ -62,13 +62,34 @@
         </div>
 
         <!-- GPS Tracking & Journey Control -->
-        <div class="bg-white rounded-lg shadow p-4 mb-4">
-            <h2 class="font-bold text-lg mb-1">📋 Journey Control</h2>
+        <div class="bg-white rounded-lg shadow p-4 mb-4 relative overflow-hidden">
+            @if($activeDispatch->is_paused)
+                <div class="absolute inset-0 bg-yellow-50/80 backdrop-blur-[1px] flex items-center justify-center z-10">
+                    <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-bold shadow-sm border border-yellow-200 animate-pulse">
+                        ⏸️ SEDANG ISTIRAHAT
+                    </div>
+                </div>
+            @endif
+
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="font-bold text-lg">📋 Journey Control</h2>
+                <button id="pause-btn" 
+                        data-paused="{{ $activeDispatch->is_paused ? 'true' : 'false' }}"
+                        class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 {{ $activeDispatch->is_paused ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200' }}">
+                    @if($activeDispatch->is_paused)
+                        ▶️ Lanjut
+                    @else
+                        ⏸️ Istirahat
+                    @endif
+                </button>
+            </div>
             
             <div id="tracking-status" class="mb-4">
                 <div class="flex items-center gap-2">
-                    <div id="status-indicator" class="w-3 h-3 bg-gray-400 rounded-full"></div>
-                    <span id="status-text" class="text-sm text-gray-600 font-medium">Tracking belum dimulai</span>
+                    <div id="status-indicator" class="w-3 h-3 {{ $activeDispatch->is_paused ? 'bg-yellow-400' : 'bg-gray-400' }} rounded-full"></div>
+                    <span id="status-text" class="text-sm text-gray-600 font-medium">
+                        {{ $activeDispatch->is_paused ? 'Tracking Dihentikan Sejenak' : 'Tracking belum dimulai' }}
+                    </span>
                 </div>
                 <p id="last-update" class="text-xs text-gray-500 mt-1"></p>
             </div>
@@ -102,7 +123,8 @@
             @if($currentConfig)
                 <button id="journey-btn" 
                         data-status="{{ $activeDispatch->status }}"
-                        class="w-full {{ $currentConfig['color'] }} text-white font-bold py-4 px-6 rounded-xl shadow-lg transition duration-200 transform active:scale-95 flex items-center justify-center gap-2">
+                        {{ $activeDispatch->is_paused ? 'disabled' : '' }}
+                        class="w-full {{ $currentConfig['color'] }} text-white font-bold py-4 px-6 rounded-xl shadow-lg transition duration-200 transform active:scale-95 flex items-center justify-center gap-2 {{ $activeDispatch->is_paused ? 'opacity-50 grayscale cursor-not-allowed' : '' }}">
                     {{ $currentConfig['label'] }}
                 </button>
             @endif
@@ -155,6 +177,50 @@ if (isCapacitor) {
     statusText.textContent = 'Mobile App Mode: Ready';
     initializeCapacitorTracking();
 }
+
+const pauseBtn = document.getElementById('pause-btn');
+
+pauseBtn?.addEventListener('click', async function() {
+    const isCurrentlyPaused = this.getAttribute('data-paused') === 'true';
+    
+    this.disabled = true;
+    const originalContent = this.innerHTML;
+    this.innerHTML = `Wait...`;
+
+    try {
+        if (isCurrentlyPaused) {
+            // Resume: Start tracking back
+            await startTracking();
+        } else {
+            // Pause: Stop tracking
+            await stopTracking();
+        }
+
+        const response = await fetch(`{{ route('driver.dispatches.toggle-pause', $activeDispatch->id ?? 0) }}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Error: ' + data.message);
+            this.disabled = false;
+            this.innerHTML = originalContent;
+        }
+    } catch (e) {
+        console.error(e);
+        alert('Terjadi kesalahan: ' + e.message);
+        this.disabled = false;
+        this.innerHTML = originalContent;
+    }
+});
 
 journeyBtn?.addEventListener('click', async function() {
     const currentStatus = this.getAttribute('data-status');

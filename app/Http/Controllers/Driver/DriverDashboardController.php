@@ -76,4 +76,28 @@ class DriverDashboardController extends Controller
             'message' => 'Status updated successfully'
         ]);
     }
+
+    public function togglePause(Request $request, Dispatch $dispatch)
+    {
+        // Security check
+        if ($dispatch->ambulance_id !== auth('ambulance')->id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $dispatch->is_paused = !$dispatch->is_paused;
+        $dispatch->save();
+
+        // Log the change
+        \App\Models\DispatchLog::create([
+            'dispatch_id' => $dispatch->id,
+            'status' => $dispatch->status,
+            'note' => $dispatch->is_paused ? 'Driver sedang istirahat (Pause)' : 'Driver melanjutkan perjalanan (Resume)'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'is_paused' => $dispatch->is_paused,
+            'message' => $dispatch->is_paused ? 'Perjalanan diistirahatkan' : 'Perjalanan dilanjutkan'
+        ]);
+    }
 }

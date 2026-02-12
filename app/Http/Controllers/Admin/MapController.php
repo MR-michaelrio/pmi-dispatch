@@ -46,6 +46,7 @@ class MapController extends Controller
                     'dispatch' => $ambulance->dispatches->first() ? [
                         'patient_name' => $ambulance->dispatches->first()->patient_name,
                         'status' => $ambulance->dispatches->first()->status,
+                        'is_paused' => $ambulance->dispatches->first()->is_paused,
                         'pickup_address' => $ambulance->dispatches->first()->pickup_address,
                         'destination' => $ambulance->dispatches->first()->destination,
                     ] : null,

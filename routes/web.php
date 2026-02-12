@@ -137,4 +137,5 @@ Route::post('ambulance/logout', [\App\Http\Controllers\Auth\AmbulanceAuthControl
 Route::middleware(['auth:ambulance'])->prefix('driver')->name('driver.')->group(function () {
     Route::get('/dashboard', [DriverDashboardController::class, 'index'])->name('dashboard');
     Route::post('/dispatches/{dispatch}/status', [DriverDashboardController::class, 'updateStatus'])->name('dispatches.update-status');
+    Route::post('/dispatches/{dispatch}/toggle-pause', [DriverDashboardController::class, 'togglePause'])->name('dispatches.toggle-pause');
 });
