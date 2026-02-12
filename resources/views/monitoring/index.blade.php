@@ -119,7 +119,9 @@ const statusBadges = {
     'assigned': '<span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Ditugaskan</span>',
     'enroute_pickup': '<span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Menuju Lokasi</span>',
     'on_scene': '<span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Di Lokasi</span>',
-    'enroute_hospital': '<span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded">Menuju RS</span>',
+    'enroute_destination': '<span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded">Menuju Tujuan</span>',
+    'arrived_destination': '<span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded">Sampai Tujuan</span>',
+    'completed': '<span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded">Selesai</span>',
     'pending': '<span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded">Pending</span>',
     'dispatched': '<span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Dispatched</span>',
 };
