@@ -34,6 +34,7 @@ class Dispatch extends Model
         'pickup_at',
         'hospital_at',
         'completed_at',
+        'created_at'
     ];
 
     /* =====================
