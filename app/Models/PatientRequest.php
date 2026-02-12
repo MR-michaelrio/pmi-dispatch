@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientRequest extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'patient_name',
         'service_type',
