@@ -64,6 +64,8 @@
                     <option value="BASIC" {{ old('type') == 'BASIC' ? 'selected' : '' }}>BASIC</option>
                     <option value="ICU" {{ old('type') == 'ICU' ? 'selected' : '' }}>ICU</option>
                     <option value="NICU" {{ old('type') == 'NICU' ? 'selected' : '' }}>NICU</option>
+                    <option value="Jenazah" {{ old('type') == 'Jenazah' ? 'selected' : '' }}>Jenazah</option>
+                    <option value="POSKO" {{ old('type') == 'POSKO' ? 'selected' : '' }}>MOBIL POSKO KESEHATAN</option>
                 </select>
             </div>
 
