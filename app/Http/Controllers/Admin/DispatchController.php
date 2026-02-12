@@ -123,13 +123,13 @@ class DispatchController extends Controller
             $startDate = Carbon::today()->startOfDay();
             $endDate = Carbon::today()->endOfDay();
         } elseif ($range === 'week') {
-            $query->whereBetween('created_at', [Carbon::Carbon::now()->startOfWeek(), Carbon::Carbon::now()->endOfWeek()]);
+            $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
             $title .= " Minggu Ini";
             $startDate = Carbon::now()->startOfWeek();
             $endDate = Carbon::now()->endOfWeek();
         } elseif ($range === 'month') {
-            $query->whereMonth('created_at', Carbon::Carbon::now()->month)
-                  ->whereYear('created_at', Carbon::Carbon::now()->year);
+            $query->whereMonth('created_at', Carbon::now()->month)
+                  ->whereYear('created_at', Carbon::now()->year);
             $title .= " Bulan Ini";
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
