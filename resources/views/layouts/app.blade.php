@@ -9,9 +9,12 @@
 
     <!-- Tailwind CSS (CDN, tanpa Vite) -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js (Core) -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-100 min-h-screen">
+<body class="font-sans antialiased bg-gray-50 min-h-screen">
 
     {{-- Navigation --}}
     @include('layouts.navigation')

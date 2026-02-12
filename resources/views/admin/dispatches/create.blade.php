@@ -1,70 +1,98 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto py-8">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <h1 class="text-2xl font-bold mb-6">🚑 Dispatch Baru</h1>
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            🚑 Dispatch Baru
+        </h1>
+        <p class="text-gray-500 text-sm mt-1">
+            Buat penugasan ambulans baru
+        </p>
+    </div>
 
     <form method="POST" action="{{ route('admin.dispatches.store') }}"
-          class="bg-white p-6 rounded-xl shadow space-y-6">
+          class="bg-white p-6 rounded-xl shadow border border-gray-100 space-y-6">
         @csrf
 
         @if(isset($patientRequest) && $patientRequest)
             <input type="hidden" name="patient_request_id" value="{{ $patientRequest->id }}">
         @endif
 
-        <div>
-            <label class="font-medium">Nama Pasien</label>
-            <input type="text" name="patient_name" required class="w-full border rounded px-4 py-2"
-                   value="{{ old('patient_name', $patientRequest->patient_name ?? '') }}">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Nama Pasien</label>
+                <input type="text" name="patient_name" required 
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500"
+                       value="{{ old('patient_name', $patientRequest->patient_name ?? '') }}">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">No HP Pasien</label>
+                <input type="text" name="patient_phone" 
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500"
+                       value="{{ old('patient_phone', $patientRequest->phone ?? '') }}">
+            </div>
         </div>
 
         <div>
-            <label class="font-medium">Kondisi Pasien</label>
-            <select name="patient_condition" required class="w-full border rounded px-4 py-2">
+            <label class="block text-sm font-bold text-gray-700 mb-1">Kondisi Pasien</label>
+            <select name="patient_condition" required 
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500">
                 <option value="emergency" {{ old('patient_condition', $patientRequest->patient_condition ?? '') === 'emergency' ? 'selected' : '' }}>🚨 Emergency</option>
                 <option value="kontrol" {{ old('patient_condition', $patientRequest->patient_condition ?? '') === 'kontrol' ? 'selected' : '' }}>🩺 Kontrol</option>
-                <option value="jenazah" {{ old('patient_condition', $patientRequest->service_type ?? '') === 'jenazah' ? 'selected' : '' }}>⚰️ Jenazah</option>
+                <option value="jenazah" {{ (old('patient_condition') === 'jenazah' || (isset($patientRequest) && $patientRequest->service_type === 'jenazah')) ? 'selected' : '' }}>⚰️ Jenazah</option>
             </select>
         </div>
 
-        <div>
-            <label class="font-medium">No HP Pasien</label>
-            <input type="text" name="patient_phone" class="w-full border rounded px-4 py-2"
-                   value="{{ old('patient_phone', $patientRequest->phone ?? '') }}">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-gray-50 pt-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Alamat Jemput</label>
+                <textarea name="pickup_address" required rows="3"
+                          class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500">{{ old('pickup_address', $patientRequest->pickup_address ?? '') }}</textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Tujuan</label>
+                <textarea name="destination" required rows="3"
+                          class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500">{{ old('destination', $patientRequest->destination ?? '') }}</textarea>
+            </div>
         </div>
 
-        <div>
-            <label class="font-medium">Alamat Jemput</label>
-            <textarea name="pickup_address" required class="w-full border rounded px-4 py-2">{{ old('pickup_address', $patientRequest->pickup_address ?? '') }}</textarea>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-gray-50 pt-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Driver</label>
+                <select name="driver_id" required 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500">
+                    <option value="">-- Pilih Driver --</option>
+                    @foreach($drivers as $d)
+                        <option value="{{ $d->id }}">{{ $d->name }} ({{ $d->status }})</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Ambulans</label>
+                <select name="ambulance_id" required 
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500">
+                    <option value="">-- Pilih Ambulans --</option>
+                    @foreach($ambulances as $a)
+                        <option value="{{ $a->id }}">{{ $a->plate_number }} ({{ $a->status }})</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
-        <div>
-            <label class="font-medium">Tujuan</label>
-            <textarea name="destination" required class="w-full border rounded px-4 py-2">{{ old('destination', $patientRequest->destination ?? '') }}</textarea>
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6">
+            <a href="{{ route('admin.dispatches.index') }}" 
+               class="text-gray-600 hover:text-gray-800 font-bold w-full sm:w-auto text-center">
+                ← Batal
+            </a>
+            <button class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg w-full sm:w-auto transition transform active:scale-95">
+                🚑 Dispatch Sekarang
+            </button>
         </div>
-
-        <div>
-            <label class="font-medium">Driver</label>
-            <select name="driver_id" required class="w-full border rounded px-4 py-2">
-                @foreach($drivers as $d)
-                    <option value="{{ $d->id }}">{{ $d->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div>
-            <label class="font-medium">Ambulans</label>
-            <select name="ambulance_id" required class="w-full border rounded px-4 py-2">
-                @foreach($ambulances as $a)
-                    <option value="{{ $a->id }}">{{ $a->plate_number }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded">
-            🚑 Dispatch Sekarang
-        </button>
 
     </form>
 </div>

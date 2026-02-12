@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
+@section('title', 'Peta Realtime | GMCI Admin')
+
 @section('content')
-<div class="max-w-7xl mx-auto px-6 py-6">
-    <div class="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-6 gap-4">
-        <h1 class="text-2xl font-bold text-gray-800">🗺️ Peta Ambulans (Realtime)</h1>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">🗺️ Peta Ambulans (Realtime)</h1>
+            <p class="text-gray-500 text-xs mt-1">Gunakan unit panel di kiri untuk fokus ke lokasi</p>
+        </div>
         
-        <div class="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
+        <div class="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 w-full sm:w-auto justify-center">
             <div class="flex items-center gap-2">
                 <div class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
                 <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">Live</span>
@@ -19,7 +24,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <!-- Sidebar: Driver List -->
-        <div class="lg:col-span-1 bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col h-[600px]">
+        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col h-[300px] sm:h-[400px] lg:h-[600px]">
             <div class="p-4 border-b border-gray-100">
                 <h2 class="font-bold text-gray-700 flex items-center gap-2">
                     🚑 Unit Aktif (<span id="active-count">0</span>)
@@ -34,7 +39,7 @@
 
         <!-- Map -->
         <div class="lg:col-span-3">
-            <div id="map" style="height: 600px;" class="rounded-lg shadow"></div>
+            <div id="map" class="h-[400px] sm:h-[500px] lg:h-[600px] rounded-xl shadow border border-gray-100 overflow-hidden"></div>
         </div>
     </div>
 </div>

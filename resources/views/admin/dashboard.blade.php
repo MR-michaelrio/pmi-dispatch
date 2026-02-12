@@ -1,11 +1,20 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard (Maps) | GMCI Admin')
+
 @section('content')
-<div class="max-w-7xl mx-auto px-6 py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <h1 class="text-2xl font-bold mb-4">🗺️ Realtime GPS Ambulance</h1>
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            🗺️ Realtime GPS Ambulance
+        </h1>
+        <p class="text-gray-500 text-sm mt-1">
+            Monitoring lokasi unit secara realtime via Webhook/Socket
+        </p>
+    </div>
 
-    <div id="map" class="w-full h-[500px] rounded-xl"></div>
+    <div id="map" class="w-full h-[400px] sm:h-[600px] rounded-xl shadow-lg border border-gray-100"></div>
 
 </div>
 

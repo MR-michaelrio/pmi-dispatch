@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-6 py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- HEADER -->
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h1 class="text-2xl font-bold text-gray-800">
             🚨 Dispatch Ambulans
         </h1>
 
-        <div class="flex gap-2">
+        <div class="flex gap-2 w-full sm:w-auto">
             <!-- EXPORT PDF -->
             <a href="{{ route('admin.dispatches.export.pdf') }}"
-               class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm shadow">
+               class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm shadow flex-1 sm:flex-none text-center">
                 📄 Export PDF
             </a>
 
             <!-- DISPATCH BARU -->
             <a href="{{ route('admin.dispatches.create') }}"
-               class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm shadow">
+               class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm shadow flex-1 sm:flex-none text-center">
                 ➕ Dispatch Baru
             </a>
         </div>
@@ -26,7 +26,8 @@
 
     <!-- TABLE -->
     <div class="bg-white rounded-xl shadow overflow-hidden">
-        <table class="w-full text-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
             <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="px-4 py-3 text-left">Pasien</th>
@@ -115,6 +116,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 @endsection

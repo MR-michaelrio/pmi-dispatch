@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Detail Permintaan | GMCI Admin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen">
+@extends('layouts.app')
 
-@include('layouts.navigation')
+@section('title', 'Detail Permintaan | GMCI Admin')
 
-<div class="max-w-4xl mx-auto px-6 py-8">
+@section('content')
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Header -->
     <div class="mb-6">
@@ -19,26 +13,26 @@
     </div>
 
     <!-- Request Details Card -->
-    <div class="bg-white shadow rounded-lg p-6 space-y-4">
+    <div class="bg-white shadow rounded-xl p-6 space-y-6 border border-gray-100">
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-                <label class="block text-sm font-medium text-gray-500">Nama Pasien</label>
-                <p class="text-lg font-semibold text-gray-900">{{ $patientRequest->patient_name }}</p>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Nama Pasien</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">{{ $patientRequest->patient_name }}</p>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-500">Tanggal</label>
-                <p class="text-lg font-semibold text-gray-900">
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Tanggal</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">
                     {{ $patientRequest->request_date->format('d F Y') }}
                 </p>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-                <label class="block text-sm font-medium text-gray-500">Jenis Layanan</label>
-                <p class="text-lg font-semibold text-gray-900">
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Jenis Layanan</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">
                     @if ($patientRequest->service_type === 'ambulance')
                         🚑 Ambulance
                     @else
@@ -48,12 +42,12 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-500">Kondisi Pasien</label>
-                <p class="text-lg font-semibold text-gray-900">
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Kondisi Pasien</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">
                     @if ($patientRequest->patient_condition === 'emergency')
-                        🚨 Emergency
+                        <span class="text-red-600">🚨 Emergency</span>
                     @elseif ($patientRequest->patient_condition === 'kontrol')
-                        🏥 Kontrol
+                        <span class="text-blue-600">🏥 Kontrol</span>
                     @else
                         <span class="text-gray-400">-</span>
                     @endif
@@ -61,44 +55,46 @@
             </div>
         </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-500">No. Telepon</label>
-            <p class="text-lg font-semibold text-gray-900">{{ $patientRequest->phone }}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-gray-50 pt-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">No. Telepon</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">{{ $patientRequest->phone }}</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Status</label>
+                <div class="mt-2">
+                    @if ($patientRequest->status === 'pending')
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm font-bold shadow-sm">
+                            ⏳ Pending
+                        </span>
+                    @elseif ($patientRequest->status === 'dispatched')
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded text-sm font-bold shadow-sm">
+                            ✅ Dispatched
+                        </span>
+                    @else
+                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded text-sm font-bold shadow-sm">
+                            ❌ Rejected
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-50 pt-6">
+            <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Alamat Jemput</label>
+            <p class="text-gray-900 mt-2 bg-gray-50 p-3 rounded-lg border border-gray-100">{{ $patientRequest->pickup_address }}</p>
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-500">Alamat Jemput</label>
-            <p class="text-gray-900">{{ $patientRequest->pickup_address }}</p>
-        </div>
-
-        <div>
-            <label class="block text-sm font-medium text-gray-500">Tujuan</label>
-            <p class="text-gray-900">{{ $patientRequest->destination }}</p>
-        </div>
-
-        <div>
-            <label class="block text-sm font-medium text-gray-500">Status</label>
-            <p class="text-lg font-semibold">
-                @if ($patientRequest->status === 'pending')
-                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm font-semibold">
-                        ⏳ Pending
-                    </span>
-                @elseif ($patientRequest->status === 'dispatched')
-                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded text-sm font-semibold">
-                        ✅ Dispatched
-                    </span>
-                @else
-                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded text-sm font-semibold">
-                        ❌ Rejected
-                    </span>
-                @endif
-            </p>
+            <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Tujuan</label>
+            <p class="text-gray-900 mt-2 bg-gray-50 p-3 rounded-lg border border-gray-100">{{ $patientRequest->destination }}</p>
         </div>
 
         @if ($patientRequest->dispatch_id)
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Dispatch ID</label>
-                <p class="text-lg font-semibold text-blue-600">
+            <div class="border-t border-gray-50 pt-6">
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Dispatch ID</label>
+                <p class="text-xl font-bold text-blue-600 mt-1">
                     #{{ $patientRequest->dispatch_id }}
                 </p>
             </div>
@@ -107,16 +103,16 @@
     </div>
 
     <!-- Actions -->
-    <div class="mt-6 flex justify-between items-center">
+    <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <a href="{{ route('admin.patient-requests.index') }}"
-           class="text-gray-600 hover:text-gray-800 font-medium">
+           class="text-gray-600 hover:text-gray-800 font-bold flex items-center w-full sm:w-auto">
             ← Kembali
         </a>
 
         @if ($patientRequest->status === 'pending')
-            <div class="space-x-3">
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <a href="{{ route('admin.patient-requests.create-dispatch', $patientRequest) }}"
-                   class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold shadow">
+                   class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg text-center transition transform active:scale-95">
                     ✅ Buat Dispatch
                 </a>
 
@@ -125,7 +121,7 @@
                       onsubmit="return confirm('Yakin ingin menolak permintaan ini?')">
                     @csrf
                     <button type="submit"
-                            class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold shadow">
+                            class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg w-full transition transform active:scale-95">
                         ❌ Tolak
                     </button>
                 </form>
@@ -134,6 +130,4 @@
     </div>
 
 </div>
-
-</body>
-</html>
+@endsection
