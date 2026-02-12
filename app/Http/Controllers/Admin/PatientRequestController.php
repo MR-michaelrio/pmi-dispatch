@@ -38,6 +38,37 @@ class PatientRequestController extends Controller
         ]);
     }
 
+    public function edit(PatientRequest $patientRequest)
+    {
+        return view('admin.patient_requests.edit', compact('patientRequest'));
+    }
+
+    public function update(Request $request, PatientRequest $patientRequest)
+    {
+        $validated = $request->validate([
+            'patient_name' => 'required',
+            'service_type' => 'required|in:ambulance,jenazah',
+            'request_date' => 'required|date',
+            'phone' => 'nullable',
+            'pickup_address' => 'required',
+            'destination' => 'nullable',
+            'patient_condition' => 'nullable|in:emergency,kontrol',
+        ]);
+
+        $patientRequest->update($validated);
+
+        return redirect()->route('admin.patient-requests.index')
+            ->with('success', 'Permintaan berhasil diperbarui');
+    }
+
+    public function destroy(PatientRequest $patientRequest)
+    {
+        $patientRequest->delete();
+
+        return redirect()->route('admin.patient-requests.index')
+            ->with('success', 'Permintaan berhasil dihapus');
+    }
+
     public function reject(PatientRequest $patientRequest)
     {
         $patientRequest->update(['status' => 'rejected']);

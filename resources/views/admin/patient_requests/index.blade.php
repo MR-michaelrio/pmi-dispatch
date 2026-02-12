@@ -84,11 +84,22 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm space-x-3">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm flex items-center gap-3">
                                 <a href="{{ route('admin.patient-requests.show', $request) }}"
                                    class="text-blue-600 hover:text-blue-800 font-bold">
                                     Lihat
                                 </a>
+                                <a href="{{ route('admin.patient-requests.edit', $request) }}"
+                                   class="text-amber-600 hover:text-amber-800 font-bold">
+                                    Edit
+                                </a>
+                                <form action="{{ route('admin.patient-requests.destroy', $request) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus permintaan ini?')" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-bold">
+                                        Hapus
+                                    </button>
+                                </form>
                                 @if ($request->status === 'pending')
                                     <a href="{{ route('admin.patient-requests.create-dispatch', $request) }}"
                                        class="text-green-600 hover:text-green-800 font-bold">
