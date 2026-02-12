@@ -59,9 +59,7 @@
                     </label>
                     <select name="role" required
                             class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        <option value="dispatcher" {{ old('role', $user->role) === 'dispatcher' ? 'selected' : '' }}>Dispatcher</option>
                         <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>Administrator</option>
-                        <option value="driver" {{ old('role', $user->role) === 'driver' ? 'selected' : '' }}>Driver (Legacy)</option>
                     </select>
                 </div>
             </div>
