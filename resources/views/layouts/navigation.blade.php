@@ -5,7 +5,6 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
                         <img src="{{ asset('logo.png') }}" alt="GMCI Logo" class="h-10 w-auto">
-                        <span class="font-bold text-lg tracking-tight hidden sm:inline text-gray-800">GMCI Dispatch</span>
                     </a>
                 </div>
 
