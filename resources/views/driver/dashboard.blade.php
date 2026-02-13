@@ -298,10 +298,14 @@ journeyBtn?.addEventListener('click', async function() {
         // Special actions based on status
         if (currentStatus === 'assigned') {
             await startTracking();
-        } else if (currentStatus === 'arrived_destination' && "{{ $activeDispatch->trip_type }}" !== "round_trip") {
-            await stopTracking();
+        } else if (currentStatus === 'arrived_destination') {
+            if ("{{ $activeDispatch->trip_type }}" === "round_trip") {
+                await startTracking(); // Start tracking for return leg
+            } else {
+                await stopTracking(); // One-way finished
+            }
         } else if (currentStatus === 'enroute_return') {
-            await stopTracking();
+            await stopTracking(); // Return leg finished
         }
 
         // Update status via API
@@ -415,9 +419,6 @@ async function stopTracking() {
     trackingActive = false;
     updateUIStopped();
 }
-
-async function startTracking() {
-// ... (omitted for brevity in targetContent match)
 
 // Auto-start tracking if journey is already in progress
 const autoStartStatuses = ['enroute_pickup', 'on_scene', 'enroute_destination', 'enroute_return'];
