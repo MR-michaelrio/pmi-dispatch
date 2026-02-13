@@ -299,7 +299,7 @@ journeyBtn?.addEventListener('click', async function() {
         if (currentStatus === 'assigned') {
             await startTracking();
         } else if (currentStatus === 'arrived_destination') {
-            if ("{{ $activeDispatch->trip_type }}" === "round_trip") {
+            if ("{{ $activeDispatch->trip_type ?? '' }}" === "round_trip") {
                 await startTracking(); // Start tracking for return leg
             } else {
                 await stopTracking(); // One-way finished
