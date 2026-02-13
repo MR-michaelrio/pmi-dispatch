@@ -76,7 +76,8 @@ class DispatchController extends Controller
             'on_scene' => 'enroute_destination',
             'enroute_destination' => 'arrived_destination',
             'arrived_destination' => 'completed',
-            'enroute_return' => 'completed',
+            'enroute_return' => 'arrived_return',
+            'arrived_return' => 'completed',
         ];
 
         if (!isset($flow[$dispatch->status])) {

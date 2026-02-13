@@ -18,7 +18,7 @@ class DriverDashboardController extends Controller
         
         // Get active dispatch for this ambulance
         $activeDispatch = Dispatch::where('ambulance_id', $ambulance->id)
-            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination'])
+            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination', 'enroute_return', 'arrived_return'])
             ->first();
 
         return view('driver.dashboard', compact('activeDispatch', 'ambulance'));
@@ -37,7 +37,8 @@ class DriverDashboardController extends Controller
             'on_scene' => 'enroute_destination',
             'enroute_destination' => 'arrived_destination',
             'arrived_destination' => 'completed',
-            'enroute_return' => 'completed',
+            'enroute_return' => 'arrived_return',
+            'arrived_return' => 'completed',
         ];
 
         if (!isset($flow[$dispatch->status])) {
@@ -134,7 +135,7 @@ class DriverDashboardController extends Controller
         // Check if ambulance is already on duty
         $ambulance = auth('ambulance')->user();
         $activeDispatch = Dispatch::where('ambulance_id', $ambulance->id)
-            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination'])
+            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination', 'enroute_return', 'arrived_return'])
             ->first();
 
         if ($activeDispatch) {
@@ -156,7 +157,7 @@ class DriverDashboardController extends Controller
 
         // Double check penugasan aktif
         $activeDispatch = Dispatch::where('ambulance_id', $ambulance->id)
-            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination'])
+            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination', 'enroute_return', 'arrived_return'])
             ->first();
 
         if ($activeDispatch) {

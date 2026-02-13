@@ -117,7 +117,11 @@
                         'color' => $activeDispatch->trip_type === 'round_trip' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-red-600 hover:bg-red-700',
                     ],
                     'enroute_return' => [
-                        'label' => '🏠 Sampai di Rumah',
+                        'label' => '📍 Sudah Sampai di Rumah / Tujuan Pulang',
+                        'color' => 'bg-blue-600 hover:bg-blue-700',
+                    ],
+                    'arrived_return' => [
+                        'label' => '🏁 Selesai Penugasan',
                         'color' => 'bg-red-600 hover:bg-red-700',
                     ],
                 ];
@@ -294,7 +298,9 @@ journeyBtn?.addEventListener('click', async function() {
         // Special actions based on status
         if (currentStatus === 'assigned') {
             await startTracking();
-        } else if (currentStatus === 'arrived_destination') {
+        } else if (currentStatus === 'arrived_destination' && "{{ $activeDispatch->trip_type }}" !== "round_trip") {
+            await stopTracking();
+        } else if (currentStatus === 'enroute_return') {
             await stopTracking();
         }
 
@@ -410,8 +416,11 @@ async function stopTracking() {
     updateUIStopped();
 }
 
+async function startTracking() {
+// ... (omitted for brevity in targetContent match)
+
 // Auto-start tracking if journey is already in progress
-const autoStartStatuses = ['enroute_pickup', 'on_scene', 'enroute_destination'];
+const autoStartStatuses = ['enroute_pickup', 'on_scene', 'enroute_destination', 'enroute_return'];
 const currentDispatchStatus = "{{ $activeDispatch->status ?? '' }}";
 const isPaused = {{ ($activeDispatch && $activeDispatch->is_paused) ? 1 : 0 }};
 
