@@ -25,6 +25,10 @@ Route::get('/portal', function () {
     return view('auth.portal');
 })->name('portal');
 
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
 // Public Patient Request Form
 Route::get('/request', [PatientRequestController::class, 'create'])
     ->name('patient-request.create');
