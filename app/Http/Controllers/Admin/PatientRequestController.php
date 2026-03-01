@@ -52,7 +52,7 @@ class PatientRequestController extends Controller
             'phone' => 'nullable',
             'pickup_address' => 'required',
             'destination' => 'nullable',
-            'patient_condition' => 'nullable|in:emergency,kontrol',
+            'patient_condition' => 'nullable|in:emergency,kontrol,pasien_pulang',
         ]);
 
         $patientRequest->update($validated);
