@@ -60,7 +60,19 @@
                                 $isJenazah = $isPending 
                                     ? ($d->service_type === 'jenazah') 
                                     : ($d->patient_condition === 'jenazah');
-                                $title = $isPending ? 'MENUNGGU DISPATCH' : strtoupper($d->patient_condition);
+                                
+                                $title = '';
+                                if ($isPending) {
+                                    $title = 'MENUNGGU';
+                                } else {
+                                    if ($d->status === 'completed') {
+                                        $title = 'SELESAI';
+                                    } elseif ($d->status === 'assigned') {
+                                        $title = 'DITUGASKAN';
+                                    } else {
+                                        $title = strtoupper($d->status);
+                                    }
+                                }
                             @endphp
                             <div class="text-[9px] p-1 rounded-md leading-tight border shadow-sm
                                 @if($isJenazah) 
