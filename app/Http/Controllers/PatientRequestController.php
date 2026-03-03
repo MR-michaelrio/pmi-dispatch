@@ -18,6 +18,7 @@ class PatientRequestController extends Controller
             'patient_name' => 'required|string|max:255',
             'service_type' => 'required|in:ambulance,jenazah',
             'request_date' => 'required|date',
+            'pickup_time' => 'required',
             'phone' => 'required|string|max:20',
             'pickup_address' => 'required|string',
             'destination' => 'required|string',

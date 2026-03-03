@@ -14,6 +14,8 @@ class Dispatch extends Model
 
     protected $fillable = [
         'patient_name',
+        'request_date',
+        'pickup_time',
         'patient_condition',
         'patient_phone',
         'pickup_address',
@@ -32,6 +34,7 @@ class Dispatch extends Model
 
     protected $dates = [
         'deleted_at',
+        'request_date',
         'assigned_at',
         'pickup_at',
         'hospital_at',

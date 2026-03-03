@@ -107,6 +107,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('maps/ambulances', [MapController::class, 'getAmbulances'])
             ->name('maps.ambulances');
 
+        Route::get('schedules', [\App\Http\Controllers\Admin\ScheduleController::class, 'index'])
+            ->name('schedules.index');
+
         // Patient Requests Management
         Route::get('patient-requests', [AdminPatientRequestController::class, 'index'])
             ->name('patient-requests.index');

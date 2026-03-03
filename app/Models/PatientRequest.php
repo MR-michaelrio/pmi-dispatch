@@ -13,6 +13,7 @@ class PatientRequest extends Model
         'patient_name',
         'service_type',
         'request_date',
+        'pickup_time',
         'phone',
         'pickup_address',
         'destination',

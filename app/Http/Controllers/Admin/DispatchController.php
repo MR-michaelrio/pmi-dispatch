@@ -35,6 +35,8 @@ class DispatchController extends Controller
     {
         $dispatch = Dispatch::create($request->validate([
             'patient_name' => 'required',
+            'request_date' => 'required|date',
+            'pickup_time' => 'required',
             'patient_condition' => 'required',
             'pickup_address' => 'required',
             'destination' => 'nullable',

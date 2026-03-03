@@ -36,6 +36,22 @@
             </div>
         </div>
 
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Tanggal Penjemputan</label>
+                <input type="date" name="request_date" required 
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500"
+                       value="{{ old('request_date', isset($patientRequest) ? $patientRequest->request_date->format('Y-m-d') : date('Y-m-d')) }}">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Jam Penjemputan</label>
+                <input type="time" name="pickup_time" required 
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500"
+                       value="{{ old('pickup_time', $patientRequest->pickup_time ?? '') }}">
+            </div>
+        </div>
+
         <div>
             <label class="block text-sm font-bold text-gray-700 mb-1">Kondisi Pasien</label>
             <select name="patient_condition" id="patient_condition" required 

@@ -31,6 +31,7 @@
             <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="px-4 py-3 text-left">Pasien</th>
+                    <th class="px-4 py-3 text-left">Jadwal</th>
                     <th class="px-4 py-3 text-left">Lokasi</th>
                     <th class="px-4 py-3 text-left">Driver</th>
                     <th class="px-4 py-3 text-left">Ambulans</th>
@@ -49,6 +50,12 @@
                         <div class="text-xs text-gray-500">
                             {{ strtoupper($d->patient_condition) }}
                         </div>
+                    </td>
+
+                    <!-- JADWAL -->
+                    <td class="px-4 py-3">
+                        <div class="font-medium">{{ $d->request_date?->format('d M Y') ?? '-' }}</div>
+                        <div class="text-xs text-gray-500">{{ $d->pickup_time ?? '-' }}</div>
                     </td>
 
                     <!-- LOKASI -->
