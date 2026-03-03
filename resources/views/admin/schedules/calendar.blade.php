@@ -55,18 +55,24 @@
                     </div>
                     <div class="space-y-1">
                         @foreach($dayDispatches as $d)
-                            <div class="text-[10px] p-1 rounded leading-tight border 
+                            <div class="text-[9px] p-1 rounded-md leading-tight border shadow-sm
                                 @if($d->patient_condition === 'jenazah') 
-                                    bg-gray-100 border-gray-300 text-gray-700
-                                @elseif($d->patient_condition === 'emergency')
-                                    bg-red-50 border-red-200 text-red-700
+                                    bg-black border-gray-900 text-white
                                 @else
-                                    bg-blue-50 border-blue-200 text-blue-700
-                                @endif shadow-sm">
-                                <div class="font-bold truncate">{{ $d->pickup_time }}</div>
-                                <div class="truncate">{{ $d->patient_name }}</div>
-                                <div class="text-[8px] opacity-75 truncate">
-                                    {{ $d->ambulance?->plate_number ?? 'No Amb' }}
+                                    bg-red-600 border-red-700 text-white
+                                @endif">
+                                <div class="font-bold flex justify-between">
+                                    <span>{{ $d->pickup_time }}</span>
+                                    <span>{{ strtoupper($d->patient_condition) }}</span>
+                                </div>
+                                <div class="truncate font-semibold mt-0.5">
+                                    {{ $d->ambulance?->code ?? '?' }} - {{ $d->ambulance?->plate_number ?? '-' }}
+                                </div>
+                                <div class="truncate opacity-90">
+                                    👤 {{ $d->driver?->name ?? 'No Driver' }}
+                                </div>
+                                <div class="truncate italic opacity-75 mt-0.5">
+                                    {{ $d->patient_name }}
                                 </div>
                             </div>
                         @endforeach
@@ -88,13 +94,10 @@
     <!-- Legend -->
     <div class="mt-6 flex flex-wrap gap-4 text-xs font-medium text-gray-600">
         <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-red-100 border border-red-200"></span> Emergency
+            <span class="w-3 h-3 rounded bg-red-600 border border-red-700"></span> Ambulance (Emergency/Kontrol/Pulang)
         </div>
         <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-blue-100 border border-blue-200"></span> Kontrol / Pulang
-        </div>
-        <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-gray-200 border border-gray-300"></span> Mobil Jenazah
+            <span class="w-3 h-3 rounded bg-black border border-gray-900"></span> Mobil Jenazah
         </div>
     </div>
 </div>
