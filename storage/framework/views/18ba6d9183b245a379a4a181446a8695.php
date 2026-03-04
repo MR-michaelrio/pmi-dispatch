@@ -58,12 +58,29 @@
                     <div class="space-y-1">
                         <?php $__currentLoopData = $dayItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if($item->calendar_type === 'event'): ?>
-                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm bg-pink-600 border-pink-700 text-white">
+                                <?php
+                                    $bgColor = $item->type === 'disaster' ? 'bg-orange-600' : 'bg-pink-600';
+                                    $borderColor = $item->type === 'disaster' ? 'border-orange-700' : 'border-pink-700';
+                                    $label = $item->type === 'disaster' ? '🚨 BENCANA' : '🎪 EVENT';
+                                ?>
+                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm <?php echo e($bgColor); ?> <?php echo e($borderColor); ?> text-white">
                                     <div class="font-black uppercase tracking-tighter flex items-center gap-1">
-                                        🎪 EVENT
+                                        <?php echo e($label); ?>
+
                                     </div>
                                     <div class="font-bold mt-0.5"><?php echo e($item->event_name); ?></div>
                                     <div class="text-[8px] opacity-80 truncate"><?php echo e($item->needs); ?></div>
+                                    
+                                    <?php if($item->dispatches->isNotEmpty()): ?>
+                                        <div class="mt-1 pt-1 border-t border-white/20 space-y-1">
+                                            <?php $__currentLoopData = $item->dispatches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="flex flex-col">
+                                                    <span class="font-black">🚑 <?php echo e($d->ambulance?->code ?? '?'); ?></span>
+                                                    <span class="opacity-80 text-[7px]">👤 <?php echo e(explode(' ', $d->driver?->name ?? 'No Driver')[0]); ?></span>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             <?php else: ?>
                                 <?php

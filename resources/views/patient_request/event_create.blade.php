@@ -24,7 +24,25 @@
                 @csrf
                 
                 <div class="space-y-2">
-                    <label class="text-xs font-black uppercase tracking-widest text-slate-400">Nama Kegiatan / Event</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-400">Tipe Permohonan</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="type" value="event" class="peer sr-only" checked>
+                            <div class="flex items-center gap-2 p-3 rounded-2xl bg-slate-50 border-2 border-slate-100 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 font-bold text-sm transition-all text-slate-700">
+                                🎪 <span>Event Terencana</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="type" value="disaster" class="peer sr-only">
+                            <div class="flex items-center gap-2 p-3 rounded-2xl bg-slate-50 border-2 border-slate-100 peer-checked:border-orange-500 peer-checked:bg-orange-50 font-bold text-sm transition-all text-slate-700">
+                                🚨 <span>Bencana / Darurat</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-400">Nama Kegiatan / Lokasi Kejadian</label>
                     <input type="text" name="event_name" required
                            class="w-full bg-slate-50 border-none rounded-2xl px-5 py-4 focus:ring-2 focus:ring-emerald-500 font-bold text-slate-800 placeholder:text-slate-300 transition-all"
                            placeholder="Masukkan nama event Anda">

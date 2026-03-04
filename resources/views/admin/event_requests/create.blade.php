@@ -14,6 +14,27 @@
             @if(isset($eventRequest)) @method('PUT') @endif
 
             <div class="grid grid-cols-1 gap-6">
+                {{-- Type Selector --}}
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">Tipe Kejadian</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="type" value="event" class="peer sr-only"
+                                   {{ old('type', $eventRequest->type ?? 'event') === 'event' ? 'checked' : '' }}>
+                            <div class="flex items-center gap-2 p-3 rounded-xl border-2 border-gray-200 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 font-bold text-sm transition-all">
+                                🎪 <span>Event Terencana</span>
+                            </div>
+                        </label>
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="type" value="disaster" class="peer sr-only"
+                                   {{ old('type', $eventRequest->type ?? '') === 'disaster' ? 'checked' : '' }}>
+                            <div class="flex items-center gap-2 p-3 rounded-xl border-2 border-gray-200 peer-checked:border-orange-500 peer-checked:bg-orange-50 font-bold text-sm transition-all">
+                                🚨 <span>Bencana / Darurat</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1 uppercase tracking-wider">Nama Kegiatan / Event</label>
                     <input type="text" name="event_name" value="{{ old('event_name', $eventRequest->event_name ?? '') }}" 

@@ -51,7 +51,9 @@ class ScheduleController extends Controller
                          ->whereYear('created_at', $year);
                   });
             })
-            ->get()->map(function($d) {
+            ->get()
+            ->filter(fn($d) => is_null($d->event_request_id))
+            ->map(function($d) {
                 $d->calendar_type = 'dispatch';
                 return $d;
             });
@@ -81,6 +83,7 @@ class ScheduleController extends Controller
                          ->where('end_date', '>=', $currentDate->copy()->endOfMonth());
                   });
             })
+            ->with(['dispatches.ambulance', 'dispatches.driver'])
             ->get();
 
         // Expand events to each day they occur
@@ -93,9 +96,29 @@ class ScheduleController extends Controller
             for ($date = $start; $date->lte($end); $date->addDay()) {
                 // Only if within current month
                 if ($date->month == $month && $date->year == $year) {
+                    $dateStr = $date->format('Y-m-d');
                     $cloned = clone $event;
-                    $cloned->calendar_date = $date->format('Y-m-d');
+                    $cloned->calendar_date = $dateStr;
                     $cloned->calendar_type = 'event';
+
+                    // FILTER DISPATCHES: Only show units active on this specific date
+                    // A unit is active if:
+                    // 1. Its request_date <= current date
+                    // 2. It hasn't been replaced by another unit that ALSO started on or before current date
+                    $activeOnThisDay = $event->dispatches->filter(function($d) use ($dateStr) {
+                        $started = $d->request_date->format('Y-m-d') <= $dateStr;
+                        if (!$started) return false;
+
+                        // Check if it's been replaced by something that has already started
+                        $replacedByActive = $d->eventRequest->dispatches->first(function($replacement) use ($d, $dateStr) {
+                            return $replacement->replaced_dispatch_id == $d->id && 
+                                   $replacement->request_date->format('Y-m-d') <= $dateStr;
+                        });
+
+                        return !$replacedByActive;
+                    });
+
+                    $cloned->setRelation('dispatches', $activeOnThisDay);
                     $expandedEvents->push($cloned);
                 }
             }

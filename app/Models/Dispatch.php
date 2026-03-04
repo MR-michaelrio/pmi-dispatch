@@ -30,16 +30,20 @@ class Dispatch extends Model
         'completed_at',
         'trip_type',
         'return_address',
+        'event_request_id',
+        'is_replacement',
+        'replaced_dispatch_id',
     ];
 
     protected function casts(): array
     {
         return [
             'request_date' => 'date',
-            'assigned_at' => 'datetime',
-            'pickup_at' => 'datetime',
-            'hospital_at' => 'datetime',
+            'assigned_at'  => 'datetime',
+            'pickup_at'    => 'datetime',
+            'hospital_at'  => 'datetime',
             'completed_at' => 'datetime',
+            'is_replacement' => 'boolean',
         ];
     }
 
@@ -54,6 +58,11 @@ class Dispatch extends Model
     public function ambulance()
     {
         return $this->belongsTo(Ambulance::class);
+    }
+
+    public function eventRequest()
+    {
+        return $this->belongsTo(EventRequest::class);
     }
 
     public function logs()

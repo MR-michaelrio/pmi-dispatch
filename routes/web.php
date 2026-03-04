@@ -124,6 +124,10 @@ Route::middleware(['auth'])->group(function () {
             ->name('event-requests.approve');
         Route::post('event-requests/{eventRequest}/reject', [\App\Http\Controllers\Admin\EventRequestController::class, 'reject'])
             ->name('event-requests.reject');
+        Route::post('event-requests/{eventRequest}/assign-unit', [\App\Http\Controllers\Admin\EventRequestController::class, 'assignUnit'])
+            ->name('event-requests.assign-unit');
+        Route::post('event-requests/{eventRequest}/replace-unit/{dispatch}', [\App\Http\Controllers\Admin\EventRequestController::class, 'replaceUnit'])
+            ->name('event-requests.replace-unit');
 
         // Patient Requests Management
         Route::get('patient-requests', [AdminPatientRequestController::class, 'index'])

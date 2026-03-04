@@ -57,12 +57,28 @@
                     <div class="space-y-1">
                         @foreach($dayItems as $item)
                             @if($item->calendar_type === 'event')
-                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm bg-pink-600 border-pink-700 text-white">
+                                @php
+                                    $bgColor = $item->type === 'disaster' ? 'bg-orange-600' : 'bg-pink-600';
+                                    $borderColor = $item->type === 'disaster' ? 'border-orange-700' : 'border-pink-700';
+                                    $label = $item->type === 'disaster' ? '🚨 BENCANA' : '🎪 EVENT';
+                                @endphp
+                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm {{ $bgColor }} {{ $borderColor }} text-white">
                                     <div class="font-black uppercase tracking-tighter flex items-center gap-1">
-                                        🎪 EVENT
+                                        {{ $label }}
                                     </div>
                                     <div class="font-bold mt-0.5">{{ $item->event_name }}</div>
                                     <div class="text-[8px] opacity-80 truncate">{{ $item->needs }}</div>
+                                    
+                                    @if($item->dispatches->isNotEmpty())
+                                        <div class="mt-1 pt-1 border-t border-white/20 space-y-1">
+                                            @foreach($item->dispatches as $d)
+                                                <div class="flex flex-col">
+                                                    <span class="font-black">🚑 {{ $d->ambulance?->code ?? '?' }}</span>
+                                                    <span class="opacity-80 text-[7px]">👤 {{ explode(' ', $d->driver?->name ?? 'No Driver')[0] }}</span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             @else
                                 @php
