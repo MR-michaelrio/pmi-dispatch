@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(isset($isPublic) && $isPublic ? 'layouts.public_calendar' : 'layouts.app')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -7,14 +7,19 @@
             📅 Jadwal Layanan
         </h1>
         <div class="flex items-center gap-4">
-            <a href="{{ route('admin.schedules.index', ['month' => $currentDate->copy()->subMonth()->month, 'year' => $currentDate->copy()->subMonth()->year]) }}" 
+            @php
+                $prevMonth = $currentDate->copy()->subMonth();
+                $nextMonth = $currentDate->copy()->addMonth();
+                $route = isset($isPublic) && $isPublic ? 'portal.jadwal' : 'admin.schedules.index';
+            @endphp
+            <a href="{{ route($route, ['month' => $prevMonth->month, 'year' => $prevMonth->year]) }}" 
                class="p-2 hover:bg-gray-100 rounded-full">
                 &larr;
             </a>
-            <span class="font-bold text-lg text-gray-700">
+            <span class="font-bold text-lg text-gray-700 uppercase tracking-tighter">
                 {{ $currentDate->translatedFormat('F Y') }}
             </span>
-            <a href="{{ route('admin.schedules.index', ['month' => $currentDate->copy()->addMonth()->month, 'year' => $currentDate->copy()->addMonth()->year]) }}" 
+            <a href="{{ route($route, ['month' => $nextMonth->month, 'year' => $nextMonth->year]) }}" 
                class="p-2 hover:bg-gray-100 rounded-full">
                 &rarr;
             </a>
@@ -23,114 +28,122 @@
 
     @php
         $daysInMonth = $currentDate->daysInMonth;
-        $firstDayOfMonth = $currentDate->copy()->startOfMonth()->dayOfWeek; // 0 (Sun) to 6 (Sat)
-        // Adjust if your week starts on Monday? default is 0 for Sunday.
+        $firstDayOfMonth = $currentDate->copy()->startOfMonth()->dayOfWeek;
     @endphp
 
     <div class="bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
-        <!-- Calendar Grid -->
         <div class="grid grid-cols-7 border-b bg-gray-50">
             @foreach(['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'] as $dayName)
-                <div class="py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <div class="py-2 text-center text-[10px] font-black text-gray-400 uppercase tracking-widest">
                     {{ $dayName }}
                 </div>
             @endforeach
         </div>
 
         <div class="grid grid-cols-7">
-            <!-- Blank days for the first week -->
             @for($i = 0; $i < $firstDayOfMonth; $i++)
-                <div class="h-32 border-r border-b bg-gray-50/50"></div>
+                <div class="h-32 md:h-40 border-r border-b bg-gray-50/30"></div>
             @endfor
 
-            <!-- Days of the month -->
             @for($day = 1; $day <= $daysInMonth; $day++)
                 @php
                     $dateStr = $currentDate->copy()->day($day)->format('Y-m-d');
-                    $dayDispatches = $dispatches->get($dateStr, collect());
+                    $dayItems = $dispatches->get($dateStr, collect());
                 @endphp
-                <div class="h-32 border-r border-b p-1 overflow-y-auto hover:bg-gray-50 transition">
-                    <div class="text-right text-xs font-bold text-gray-400 mb-1">
+                <div class="h-32 md:h-40 border-r border-b p-1 overflow-y-auto hover:bg-gray-50 transition relative">
+                    <div class="text-right text-xs font-black text-gray-300 mb-1 sticky top-0 bg-transparent">
                         {{ $day }}
                     </div>
                     <div class="space-y-1">
-                        @foreach($dayDispatches as $d)
-                            @php
-                                $isPending = !($d instanceof \App\Models\Dispatch);
-                                $isJenazah = $isPending 
-                                    ? ($d->service_type === 'jenazah') 
-                                    : ($d->patient_condition === 'jenazah');
-                                
-                                $title = '';
-                                if ($isPending) {
-                                    $title = 'MENUNGGU';
-                                } else {
-                                    if ($d->status === 'completed') {
-                                        $title = 'SELESAI';
-                                    } elseif ($d->status === 'assigned') {
-                                        $title = 'DITUGASKAN';
+                        @foreach($dayItems as $item)
+                            @if($item->calendar_type === 'event')
+                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm bg-pink-600 border-pink-700 text-white">
+                                    <div class="font-black uppercase tracking-tighter flex items-center gap-1">
+                                        🎪 EVENT
+                                    </div>
+                                    <div class="font-bold mt-0.5">{{ $item->event_name }}</div>
+                                    <div class="text-[8px] opacity-80 truncate">{{ $item->needs }}</div>
+                                </div>
+                            @else
+                                @php
+                                    $isPending = $item->calendar_type === 'request';
+                                    $isJenazah = $isPending 
+                                        ? ($item->service_type === 'jenazah') 
+                                        : ($item->patient_condition === 'jenazah');
+                                    
+                                    $title = '';
+                                    if ($isPending) {
+                                        $title = 'MENUNGGU';
                                     } else {
-                                        $title = strtoupper($d->status);
+                                        if ($item->status === 'completed') {
+                                            $title = 'SELESAI';
+                                        } elseif ($item->status === 'assigned') {
+                                            $title = 'ASSIGNED';
+                                        } else {
+                                            $title = strtoupper($item->status);
+                                        }
                                     }
-                                }
-                            @endphp
-                            <div class="text-[9px] p-1 rounded-md leading-tight border shadow-sm
-                                @if($isJenazah) 
-                                    bg-black border-gray-900 text-white
-                                @else
-                                    bg-red-600 border-red-700 text-white
-                                @endif">
-                                <div class="font-bold flex justify-between">
-                                    <span>
-                                        @if($d->pickup_time)
-                                            {{ \Carbon\Carbon::parse($d->pickup_time)->format('H:i') }}
+                                @endphp
+                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm
+                                    @if($isJenazah) 
+                                        bg-stone-900 border-stone-950 text-white
+                                    @else
+                                        bg-red-600 border-red-700 text-white
+                                    @endif">
+                                    <div class="font-bold flex justify-between items-center mb-0.5">
+                                        <span class="bg-white/20 px-1 rounded">
+                                            @if($item->pickup_time)
+                                                {{ \Carbon\Carbon::parse($item->pickup_time)->format('H:i') }}
+                                            @else
+                                                {{ $item->created_at->format('H:i') }}
+                                            @endif
+                                        </span>
+                                        <span class="text-[8px] font-black tracking-tighter opacity-80">{{ $title }}</span>
+                                    </div>
+                                    <div class="truncate font-black">
+                                        @if($isPending)
+                                            🕒 STANDBY
                                         @else
-                                            {{ $d->created_at->format('H:i') }}
+                                            {{ $item->ambulance?->code ?? '?' }}
                                         @endif
-                                    </span>
-                                    <span>{{ $title }}</span>
+                                    </div>
+                                    <div class="truncate opacity-90 font-medium">
+                                        @if($isPending)
+                                            -
+                                        @else
+                                            👤 {{ explode(' ', $item->driver?->name ?? 'No Driver')[0] }}
+                                        @endif
+                                    </div>
+                                    <div class="truncate italic opacity-75 mt-0.5 text-[8px]">
+                                        {{ $item->patient_name }}
+                                    </div>
                                 </div>
-                                <div class="truncate font-semibold mt-0.5">
-                                    @if($isPending)
-                                        🕒 Belum Ada Armada
-                                    @else
-                                        {{ $d->ambulance?->code ?? '?' }} - {{ $d->ambulance?->plate_number ?? '-' }}
-                                    @endif
-                                </div>
-                                <div class="truncate opacity-90">
-                                    @if($isPending)
-                                        👤 Belum Ada Driver
-                                    @else
-                                        👤 {{ $d->driver?->name ?? 'No Driver' }}
-                                    @endif
-                                </div>
-                                <div class="truncate italic opacity-75 mt-0.5">
-                                    {{ $d->patient_name }}
-                                </div>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
             @endfor
 
-            <!-- Blank days for the last week -->
             @php
                 $lastDayOfMonth = $currentDate->copy()->endOfMonth()->dayOfWeek;
                 $remainingDays = 6 - $lastDayOfMonth;
             @endphp
             @for($i = 0; $i < $remainingDays; $i++)
-                <div class="h-32 border-r border-b bg-gray-50/50"></div>
+                <div class="h-32 md:h-40 border-r border-b bg-gray-50/30"></div>
             @endfor
         </div>
     </div>
 
     <!-- Legend -->
-    <div class="mt-6 flex flex-wrap gap-4 text-xs font-medium text-gray-600">
-        <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-red-600 border border-red-700"></span> Ambulance (Emergency/Kontrol/Pulang)
+    <div class="mt-6 flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-red-600"></span> Ambulance
         </div>
-        <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-black border border-gray-900"></span> Mobil Jenazah
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-stone-900"></span> Jenazah
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-pink-600"></span> Event
         </div>
     </div>
 </div>

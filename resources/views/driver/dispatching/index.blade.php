@@ -34,15 +34,27 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="p-4">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded">
-                            {{ $request->service_type }}
-                        </span>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded">
+                                {{ $request->service_type === 'ambulance' ? '🚑 Pasien' : '⚰️ Jenazah' }}
+                            </span>
+                            @if($request->patient_condition)
+                            <span class="px-2 py-0.5 bg-red-50 text-red-600 text-[10px] font-bold uppercase tracking-wider rounded">
+                                {{ strtoupper($request->patient_condition) }}
+                            </span>
+                            @endif
+                        </div>
                         <span class="text-xs text-gray-400">
                             {{ $request->created_at->diffForHumans() }}
                         </span>
                     </div>
 
-                    <h3 class="font-bold text-gray-800">{{ $request->patient_name }}</h3>
+                    <h3 class="font-bold text-gray-800 leading-tight">
+                        {{ $request->patient_name }}
+                    </h3>
+                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mt-1">
+                        🕒 JEMPUT: {{ $request->pickup_time ? \Carbon\Carbon::parse($request->pickup_time)->format('H:i') : '-' }} WIB
+                    </p>
                     
                     <div class="mt-3 space-y-2 text-sm text-gray-600">
                         <div class="flex items-start gap-2">

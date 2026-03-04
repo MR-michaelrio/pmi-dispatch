@@ -37,7 +37,7 @@
                 <p class="text-gray-500">Silakan pilih akses yang sesuai dengan peran Anda</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 <!-- Admin Login -->
                 <a href="<?php echo e(route('login')); ?>" 
@@ -72,6 +72,30 @@
                     <p class="text-sm text-gray-500 mb-6">Pantau pergerakan ambulans dan status dispatch secara publik.</p>
                     <div class="inline-flex items-center text-blue-600 font-semibold">
                         Lihat Peta →
+                    </div>
+                </a>
+
+                <!-- Public Calendar -->
+                <a href="<?php echo e(route('portal.jadwal')); ?>" 
+                   class="fade-up group bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:border-indigo-500 hover:shadow-xl transition-all duration-300 text-center"
+                   style="animation-delay: 0.4s">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">📅</div>
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Jadwal Unit</h2>
+                    <p class="text-sm text-gray-500 mb-6">Lihat jadwal penggunaan unit ambulans dan mobil jenazah.</p>
+                    <div class="inline-flex items-center text-indigo-600 font-semibold">
+                        Buka Jadwal →
+                    </div>
+                </a>
+
+                <!-- Event Request -->
+                <a href="<?php echo e(route('portal.event-request.create')); ?>" 
+                   class="fade-up group bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:border-pink-500 hover:shadow-xl transition-all duration-300 text-center"
+                   style="animation-delay: 0.5s">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🎪</div>
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Request Event</h2>
+                    <p class="text-sm text-gray-500 mb-6">Pengajuan bantuan medis atau standby unit untuk kegiatan event.</p>
+                    <div class="inline-flex items-center text-pink-600 font-semibold">
+                        Minta Bantuan →
                     </div>
                 </a>
 

@@ -31,23 +31,45 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Jam Penjemputan</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">
+                    {{ $patientRequest->pickup_time ? \Carbon\Carbon::parse($patientRequest->pickup_time)->format('H:i') : '-' }} WIB
+                </p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Tipe Perjalanan</label>
+                <p class="text-lg font-bold text-gray-900 mt-1">
+                    @if ($patientRequest->trip_type === 'round_trip')
+                        🔄 Pulang Pergi (PP)
+                    @else
+                        ➡️ Sekali Jalan
+                    @endif
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-gray-50 pt-6">
+            <div>
                 <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Jenis Layanan</label>
                 <p class="text-lg font-bold text-gray-900 mt-1">
                     @if ($patientRequest->service_type === 'ambulance')
-                        🚑 Ambulance
+                        🚑 Pasien (Ambulance)
                     @else
-                        ⚰️ Mobil Jenazah
+                        ⚰️ Jenazah (Mobil Jenazah)
                     @endif
                 </p>
             </div>
 
             <div>
-                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Kondisi Pasien</label>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Kondisi / Status</label>
                 <p class="text-lg font-bold text-gray-900 mt-1">
                     @if ($patientRequest->patient_condition === 'emergency')
-                        <span class="text-red-600">🚨 Emergency</span>
+                        <span class="text-red-600">🚨 EMERGENCY</span>
                     @elseif ($patientRequest->patient_condition === 'kontrol')
-                        <span class="text-blue-600">🏥 Kontrol</span>
+                        <span class="text-blue-600">🏥 KONTROL</span>
+                    @elseif ($patientRequest->patient_condition === 'pasien_pulang')
+                        <span class="text-emerald-600">🏠 PULANG</span>
                     @else
                         <span class="text-gray-400">-</span>
                     @endif

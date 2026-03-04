@@ -5,15 +5,20 @@
             📅 Jadwal Layanan
         </h1>
         <div class="flex items-center gap-4">
-            <a href="<?php echo e(route('admin.schedules.index', ['month' => $currentDate->copy()->subMonth()->month, 'year' => $currentDate->copy()->subMonth()->year])); ?>" 
+            <?php
+                $prevMonth = $currentDate->copy()->subMonth();
+                $nextMonth = $currentDate->copy()->addMonth();
+                $route = isset($isPublic) && $isPublic ? 'portal.jadwal' : 'admin.schedules.index';
+            ?>
+            <a href="<?php echo e(route($route, ['month' => $prevMonth->month, 'year' => $prevMonth->year])); ?>" 
                class="p-2 hover:bg-gray-100 rounded-full">
                 &larr;
             </a>
-            <span class="font-bold text-lg text-gray-700">
+            <span class="font-bold text-lg text-gray-700 uppercase tracking-tighter">
                 <?php echo e($currentDate->translatedFormat('F Y')); ?>
 
             </span>
-            <a href="<?php echo e(route('admin.schedules.index', ['month' => $currentDate->copy()->addMonth()->month, 'year' => $currentDate->copy()->addMonth()->year])); ?>" 
+            <a href="<?php echo e(route($route, ['month' => $nextMonth->month, 'year' => $nextMonth->year])); ?>" 
                class="p-2 hover:bg-gray-100 rounded-full">
                 &rarr;
             </a>
@@ -22,15 +27,13 @@
 
     <?php
         $daysInMonth = $currentDate->daysInMonth;
-        $firstDayOfMonth = $currentDate->copy()->startOfMonth()->dayOfWeek; // 0 (Sun) to 6 (Sat)
-        // Adjust if your week starts on Monday? default is 0 for Sunday.
+        $firstDayOfMonth = $currentDate->copy()->startOfMonth()->dayOfWeek;
     ?>
 
     <div class="bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
-        <!-- Calendar Grid -->
         <div class="grid grid-cols-7 border-b bg-gray-50">
             <?php $__currentLoopData = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dayName): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <div class="py-2 text-center text-[10px] font-black text-gray-400 uppercase tracking-widest">
                     <?php echo e($dayName); ?>
 
                 </div>
@@ -38,108 +41,118 @@
         </div>
 
         <div class="grid grid-cols-7">
-            <!-- Blank days for the first week -->
             <?php for($i = 0; $i < $firstDayOfMonth; $i++): ?>
-                <div class="h-32 border-r border-b bg-gray-50/50"></div>
+                <div class="h-32 md:h-40 border-r border-b bg-gray-50/30"></div>
             <?php endfor; ?>
 
-            <!-- Days of the month -->
             <?php for($day = 1; $day <= $daysInMonth; $day++): ?>
                 <?php
                     $dateStr = $currentDate->copy()->day($day)->format('Y-m-d');
-                    $dayDispatches = $dispatches->get($dateStr, collect());
+                    $dayItems = $dispatches->get($dateStr, collect());
                 ?>
-                <div class="h-32 border-r border-b p-1 overflow-y-auto hover:bg-gray-50 transition">
-                    <div class="text-right text-xs font-bold text-gray-400 mb-1">
+                <div class="h-32 md:h-40 border-r border-b p-1 overflow-y-auto hover:bg-gray-50 transition relative">
+                    <div class="text-right text-xs font-black text-gray-300 mb-1 sticky top-0 bg-transparent">
                         <?php echo e($day); ?>
 
                     </div>
                     <div class="space-y-1">
-                        <?php $__currentLoopData = $dayDispatches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php
-                                $isPending = !($d instanceof \App\Models\Dispatch);
-                                $isJenazah = $isPending 
-                                    ? ($d->service_type === 'jenazah') 
-                                    : ($d->patient_condition === 'jenazah');
-                                
-                                $title = '';
-                                if ($isPending) {
-                                    $title = 'MENUNGGU';
-                                } else {
-                                    if ($d->status === 'completed') {
-                                        $title = 'SELESAI';
-                                    } elseif ($d->status === 'assigned') {
-                                        $title = 'DITUGASKAN';
+                        <?php $__currentLoopData = $dayItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if($item->calendar_type === 'event'): ?>
+                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm bg-pink-600 border-pink-700 text-white">
+                                    <div class="font-black uppercase tracking-tighter flex items-center gap-1">
+                                        🎪 EVENT
+                                    </div>
+                                    <div class="font-bold mt-0.5"><?php echo e($item->event_name); ?></div>
+                                    <div class="text-[8px] opacity-80 truncate"><?php echo e($item->needs); ?></div>
+                                </div>
+                            <?php else: ?>
+                                <?php
+                                    $isPending = $item->calendar_type === 'request';
+                                    $isJenazah = $isPending 
+                                        ? ($item->service_type === 'jenazah') 
+                                        : ($item->patient_condition === 'jenazah');
+                                    
+                                    $title = '';
+                                    if ($isPending) {
+                                        $title = 'MENUNGGU';
                                     } else {
-                                        $title = strtoupper($d->status);
+                                        if ($item->status === 'completed') {
+                                            $title = 'SELESAI';
+                                        } elseif ($item->status === 'assigned') {
+                                            $title = 'ASSIGNED';
+                                        } else {
+                                            $title = strtoupper($item->status);
+                                        }
                                     }
-                                }
-                            ?>
-                            <div class="text-[9px] p-1 rounded-md leading-tight border shadow-sm
-                                <?php if($isJenazah): ?> 
-                                    bg-black border-gray-900 text-white
-                                <?php else: ?>
-                                    bg-red-600 border-red-700 text-white
-                                <?php endif; ?>">
-                                <div class="font-bold flex justify-between">
-                                    <span>
-                                        <?php if($d->pickup_time): ?>
-                                            <?php echo e(\Carbon\Carbon::parse($d->pickup_time)->format('H:i')); ?>
+                                ?>
+                                <div class="text-[9px] p-1.5 rounded-md leading-tight border shadow-sm
+                                    <?php if($isJenazah): ?> 
+                                        bg-stone-900 border-stone-950 text-white
+                                    <?php else: ?>
+                                        bg-red-600 border-red-700 text-white
+                                    <?php endif; ?>">
+                                    <div class="font-bold flex justify-between items-center mb-0.5">
+                                        <span class="bg-white/20 px-1 rounded">
+                                            <?php if($item->pickup_time): ?>
+                                                <?php echo e(\Carbon\Carbon::parse($item->pickup_time)->format('H:i')); ?>
 
+                                            <?php else: ?>
+                                                <?php echo e($item->created_at->format('H:i')); ?>
+
+                                            <?php endif; ?>
+                                        </span>
+                                        <span class="text-[8px] font-black tracking-tighter opacity-80"><?php echo e($title); ?></span>
+                                    </div>
+                                    <div class="truncate font-black">
+                                        <?php if($isPending): ?>
+                                            🕒 STANDBY
                                         <?php else: ?>
-                                            <?php echo e($d->created_at->format('H:i')); ?>
+                                            <?php echo e($item->ambulance?->code ?? '?'); ?>
 
                                         <?php endif; ?>
-                                    </span>
-                                    <span><?php echo e($title); ?></span>
-                                </div>
-                                <div class="truncate font-semibold mt-0.5">
-                                    <?php if($isPending): ?>
-                                        🕒 Belum Ada Armada
-                                    <?php else: ?>
-                                        <?php echo e($d->ambulance?->code ?? '?'); ?> - <?php echo e($d->ambulance?->plate_number ?? '-'); ?>
+                                    </div>
+                                    <div class="truncate opacity-90 font-medium">
+                                        <?php if($isPending): ?>
+                                            -
+                                        <?php else: ?>
+                                            👤 <?php echo e(explode(' ', $item->driver?->name ?? 'No Driver')[0]); ?>
 
-                                    <?php endif; ?>
-                                </div>
-                                <div class="truncate opacity-90">
-                                    <?php if($isPending): ?>
-                                        👤 Belum Ada Driver
-                                    <?php else: ?>
-                                        👤 <?php echo e($d->driver?->name ?? 'No Driver'); ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="truncate italic opacity-75 mt-0.5 text-[8px]">
+                                        <?php echo e($item->patient_name); ?>
 
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
-                                <div class="truncate italic opacity-75 mt-0.5">
-                                    <?php echo e($d->patient_name); ?>
-
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             <?php endfor; ?>
 
-            <!-- Blank days for the last week -->
             <?php
                 $lastDayOfMonth = $currentDate->copy()->endOfMonth()->dayOfWeek;
                 $remainingDays = 6 - $lastDayOfMonth;
             ?>
             <?php for($i = 0; $i < $remainingDays; $i++): ?>
-                <div class="h-32 border-r border-b bg-gray-50/50"></div>
+                <div class="h-32 md:h-40 border-r border-b bg-gray-50/30"></div>
             <?php endfor; ?>
         </div>
     </div>
 
     <!-- Legend -->
-    <div class="mt-6 flex flex-wrap gap-4 text-xs font-medium text-gray-600">
-        <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-red-600 border border-red-700"></span> Ambulance (Emergency/Kontrol/Pulang)
+    <div class="mt-6 flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-red-600"></span> Ambulance
         </div>
-        <div class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded bg-black border border-gray-900"></span> Mobil Jenazah
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-stone-900"></span> Jenazah
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-pink-600"></span> Event
         </div>
     </div>
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Applications/Dev/ambulance-dispatch/resources/views/admin/schedules/calendar.blade.php ENDPATH**/ ?>
+<?php echo $__env->make(isset($isPublic) && $isPublic ? 'layouts.public_calendar' : 'layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Applications/Dev/ambulance-dispatch/resources/views/admin/schedules/calendar.blade.php ENDPATH**/ ?>

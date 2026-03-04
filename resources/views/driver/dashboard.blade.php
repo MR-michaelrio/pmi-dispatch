@@ -35,27 +35,49 @@
         <div class="bg-white rounded-lg shadow p-4 mb-4">
             <h2 class="font-bold text-lg mb-3">📍 Dispatch Aktif</h2>
             
-            <div class="space-y-2 text-sm">
-                <div>
-                    <span class="text-gray-600">Pasien:</span>
-                    <span class="font-semibold">{{ $activeDispatch->patient_name }}</span>
+            <div class="space-y-4 text-sm">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Pasien</span>
+                        <span class="font-bold text-gray-800">{{ $activeDispatch->patient_name }}</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Layanan</span>
+                        <span class="font-bold text-gray-800">
+                            {{ $activeDispatch->patient_condition === 'jenazah' ? '⚰️ Jenazah' : '🚑 Pasien' }}
+                        </span>
+                    </div>
                 </div>
-                <div>
-                    <span class="text-gray-600">Kondisi:</span>
-                    <span class="font-semibold">{{ ucfirst($activeDispatch->patient_condition) }}</span>
+
+                <div class="grid grid-cols-2 gap-4 border-t border-gray-50 pt-3">
+                    <div>
+                        <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Jam Jemput</span>
+                        <span class="font-bold text-blue-600">
+                            {{ $activeDispatch->pickup_time ? \Carbon\Carbon::parse($activeDispatch->pickup_time)->format('H:i') : '-' }} WIB
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Tipe</span>
+                        <span class="font-bold text-gray-800">
+                            {{ $activeDispatch->trip_type === 'round_trip' ? '🔄 Balik' : '➡️ 1 Way' }}
+                        </span>
+                    </div>
                 </div>
-                <div>
-                    <span class="text-gray-600">Jemput:</span>
-                    <p class="text-gray-800">{{ $activeDispatch->pickup_address }}</p>
+
+                <div class="border-t border-gray-50 pt-3">
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Alamat Jemput</span>
+                    <p class="font-medium text-gray-800 leading-snug">{{ $activeDispatch->pickup_address }}</p>
                 </div>
-                <div>
-                    <span class="text-gray-600">Tujuan:</span>
-                    <p class="text-gray-800">{{ $activeDispatch->destination }}</p>
+                
+                <div class="border-t border-gray-50 pt-3">
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Tujuan</span>
+                    <p class="font-medium text-gray-800 leading-snug">{{ $activeDispatch->destination }}</p>
                 </div>
+
                 <div>
-                    <span class="text-gray-600">Status:</span>
-                    <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-semibold">
-                        {{ ucfirst(str_replace('_', ' ', $activeDispatch->status)) }}
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Status</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-[10px] font-black uppercase tracking-wider">
+                        {{ str_replace('_', ' ', $activeDispatch->status) }}
                     </span>
                 </div>
             </div>

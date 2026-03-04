@@ -176,6 +176,8 @@ class DriverDashboardController extends Controller
             'assigned_at' => now(),
             'trip_type' => $patientRequest->trip_type ?? 'one_way',
             'return_address' => $patientRequest->return_address,
+            'request_date' => $patientRequest->request_date,
+            'pickup_time' => $patientRequest->pickup_time,
         ]);
 
         // Update statuses

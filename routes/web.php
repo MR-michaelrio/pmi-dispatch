@@ -41,6 +41,14 @@ Route::get('/monitoring', [\App\Http\Controllers\MonitoringController::class, 'i
 Route::get('/monitoring/data', [\App\Http\Controllers\MonitoringController::class, 'getData'])
     ->name('monitoring.data');
 
+// Public Calendar & Events
+Route::get('/portal/jadwal', [\App\Http\Controllers\Admin\ScheduleController::class, 'public'])
+    ->name('portal.jadwal');
+Route::get('/portal/event-request', [\App\Http\Controllers\Admin\EventRequestController::class, 'publicCreate'])
+    ->name('portal.event-request.create');
+Route::post('/portal/event-request', [\App\Http\Controllers\Admin\EventRequestController::class, 'publicStore'])
+    ->name('portal.event-request.store');
+
 // API Routes (for driver GPS tracking)
 Route::post('/api/driver/location', [DriverLocationController::class, 'updateLocation'])
     ->middleware('auth:ambulance');  // specific guard here if we want, or just 'auth' if we configure defaults properly
@@ -109,6 +117,13 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('schedules', [\App\Http\Controllers\Admin\ScheduleController::class, 'index'])
             ->name('schedules.index');
+
+        // Event Requests Management
+        Route::resource('event-requests', \App\Http\Controllers\Admin\EventRequestController::class);
+        Route::post('event-requests/{eventRequest}/approve', [\App\Http\Controllers\Admin\EventRequestController::class, 'approve'])
+            ->name('event-requests.approve');
+        Route::post('event-requests/{eventRequest}/reject', [\App\Http\Controllers\Admin\EventRequestController::class, 'reject'])
+            ->name('event-requests.reject');
 
         // Patient Requests Management
         Route::get('patient-requests', [AdminPatientRequestController::class, 'index'])

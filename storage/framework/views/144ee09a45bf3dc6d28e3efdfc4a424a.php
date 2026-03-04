@@ -41,7 +41,7 @@
 
     <!-- Form Card -->
     <div class="bg-white shadow-lg rounded-lg p-8">
-        <form method="POST" action="<?php echo e(route('patient-request.store')); ?>" class="space-y-6">
+        <form id="request-form" method="POST" action="<?php echo e(route('patient-request.store')); ?>" class="space-y-6">
             <?php echo csrf_field(); ?>
 
             <!-- Patient Name -->
@@ -63,10 +63,10 @@
                         class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Pilih Layanan --</option>
                     <option value="ambulance" <?php echo e(old('service_type') === 'ambulance' ? 'selected' : ''); ?>>
-                        🚑 Ambulance
+                        🚑 Pasien
                     </option>
                     <option value="jenazah" <?php echo e(old('service_type') === 'jenazah' ? 'selected' : ''); ?>>
-                        ⚰️ Mobil Jenazah
+                        ⚰️ Jenazah
                     </option>
                 </select>
             </div>
@@ -80,13 +80,13 @@
                         class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Pilih Kondisi --</option>
                     <option value="emergency" <?php echo e(old('patient_condition') === 'emergency' ? 'selected' : ''); ?>>
-                        🚨 Emergency
+                        🚨 EMERGENCY
                     </option>
                     <option value="kontrol" <?php echo e(old('patient_condition') === 'kontrol' ? 'selected' : ''); ?>>
-                        🏥 Kontrol
+                        🏥 KONTROL
                     </option>
                     <option value="pasien_pulang" <?php echo e(old('patient_condition') === 'pasien_pulang' ? 'selected' : ''); ?>>
-                        🏘️ Pasien Pulang
+                        🏠 PULANG
                     </option>
                 </select>
             </div>
@@ -170,9 +170,10 @@
 
             <!-- Submit Button -->
             <div class="pt-4">
-                <button type="submit"
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-200">
-                    📤 Kirim Permintaan
+                <button type="submit" id="submit-btn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 px-6 rounded-xl shadow-lg transition duration-200 transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="btn-text">📤 KIRIM PERMINTAAN</span>
+                    <span id="btn-loading" class="hidden">⌛ SEDANG MENGIRIM...</span>
                 </button>
             </div>
         </form>
@@ -244,6 +245,17 @@
     patientConditionSelect.addEventListener('change', toggleFormFields);
     tripTypeRadios.forEach(radio => {
         radio.addEventListener('change', updateReturnAddressVisibility);
+    });
+
+    // Loading State for Submit
+    document.getElementById('request-form').addEventListener('submit', function() {
+        const btn = document.getElementById('submit-btn');
+        const text = document.getElementById('btn-text');
+        const loading = document.getElementById('btn-loading');
+        
+        btn.disabled = true;
+        text.classList.add('hidden');
+        loading.classList.remove('hidden');
     });
 </script>
 
