@@ -70,6 +70,12 @@ class DispatchController extends Controller
         return redirect()->route('admin.dispatches.index');
     }
 
+    public function show(Dispatch $dispatch)
+    {
+        $dispatch->load(['driver', 'ambulance', 'logs']);
+        return view('admin.dispatches.show', compact('dispatch'));
+    }
+
     public function next(Dispatch $dispatch)
     {
         $flow = [
@@ -174,5 +180,14 @@ class DispatchController extends Controller
         $pdf = Pdf::loadView('admin.dispatches.dashboard_pdf', compact('dispatches', 'analytics', 'title', 'range', 'sundayDispatches'));
 
         return $pdf->download('dispatch-report-' . $range . '-' . date('Y-m-d') . '.pdf');
+    }
+
+    public function locationHistory(Dispatch $dispatch)
+    {
+        $history = \App\Models\DispatchLocationHistory::where('dispatch_id', $dispatch->id)
+            ->orderBy('created_at', 'asc')
+            ->get(['latitude', 'longitude', 'created_at']);
+        
+        return response()->json($history);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Ambulance;
 use App\Models\Driver;
+use App\Models\Dispatch;
+use App\Models\DispatchLocationHistory;
 use Illuminate\Http\Request;
 
 class DriverLocationController extends Controller
@@ -32,6 +34,19 @@ class DriverLocationController extends Controller
             'longitude' => $validated['longitude'],
             'last_location_update' => now(),
         ]);
+
+        // Save to location history if on active dispatch
+        $activeDispatch = Dispatch::where('ambulance_id', $ambulance->id)
+            ->whereIn('status', ['assigned', 'enroute_pickup', 'on_scene', 'enroute_destination', 'arrived_destination', 'enroute_return', 'arrived_return'])
+            ->first();
+
+        if ($activeDispatch) {
+            DispatchLocationHistory::create([
+                'dispatch_id' => $activeDispatch->id,
+                'latitude' => $validated['latitude'],
+                'longitude' => $validated['longitude'],
+            ]);
+        }
 
         return response()->json([
             'success' => true,

@@ -109,6 +109,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('dispatches/{dispatch}/status', [DispatchController::class, 'updateStatus'])
              ->name('dispatches.update-status');
 
+        Route::get('dispatches/{dispatch}/location-history', [DispatchController::class, 'locationHistory'])
+             ->name('dispatches.location-history');
+
         // ✅ MAPS (INI YANG SEBELUMNYA HILANG)
         Route::get('maps', [MapController::class, 'index'])
             ->name('maps');
