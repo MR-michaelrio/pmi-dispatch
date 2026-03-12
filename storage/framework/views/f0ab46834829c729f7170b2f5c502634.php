@@ -90,6 +90,12 @@
                     <td class="px-4 py-3 text-center">
                         <div class="flex justify-center gap-2">
 
+                            <!-- DETAIL -->
+                            <a href="<?php echo e(route('admin.dispatches.show', $d)); ?>"
+                               class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs">
+                                📄 Detail
+                            </a>
+
                             <?php if($d->status !== 'completed'): ?>
                             <!-- NEXT -->
                             <form method="POST"
