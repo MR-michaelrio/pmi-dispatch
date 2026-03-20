@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
-    <title>Permintaan Event | GMCI</title>
+    <title>Permintaan Event | PMI Kabupaten Bekasi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -15,7 +15,7 @@
 
     <div class="max-w-2xl mx-auto px-6 py-12">
         <div class="text-center mb-10">
-            <img src="/logo-pmi.png" alt="GMCI Logo" class="h-12 mx-auto mb-4">
+            <img src="/logo-pmi.png" alt="PMI Kabupaten Bekasi Logo" class="h-12 mx-auto mb-4">
             <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Permintaan Event</h1>
             <p class="text-slate-500 mt-2 font-medium">Lengkapi formulir di bawah untuk pengajuan pengawalan event</p>
         </div>
@@ -95,7 +95,7 @@
         </div>
 
         <footer class="mt-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
-            © {{ date('Y') }} Global Medical Care Indonesia
+            © {{ date('Y') }} PMI Kabupaten Bekasi
         </footer>
     </div>
 

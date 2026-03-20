@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Dispatch | GMCI Admin')
+@section('title', 'Detail Dispatch | PMI Kabupaten Bekasi Admin')
 
 @section('content')
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

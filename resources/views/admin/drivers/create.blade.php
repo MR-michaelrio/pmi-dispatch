@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Driver | GMCI Dispatch')
+@section('title', 'Tambah Driver | PMI Kabupaten Bekasi Dispatch')
 
 @section('content')
 <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,7 +9,7 @@
             ➕ Tambah Driver
         </h1>
         <p class="text-gray-500 text-sm mt-1">
-            Daftarkan driver baru GMCI
+            Daftarkan driver baru PMI Kabupaten Bekasi
         </p>
     </div>
 

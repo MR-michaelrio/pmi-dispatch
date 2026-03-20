@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>GMCI Dispatch | Global Medical Care Indonesia</title>
+    <title>PMI Kabupaten Bekasi Dispatch | PMI Kabupaten Bekasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
 
@@ -38,7 +38,7 @@
 
             <!-- LOGO + NAME -->
             <div class="flex items-center gap-4">
-                <img src="/logo-pmi.png" alt="GMCI Logo" class="h-10">
+                <img src="/logo-pmi.png" alt="PMI Kabupaten Bekasi Logo" class="h-10">
             </div>
 
             <!-- LOGIN -->
@@ -135,7 +135,7 @@
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-300">
         <div class="max-w-7xl mx-auto px-6 py-8 text-center text-sm">
-            © {{ date('Y') }} Global Medical Care Indonesia.<br>
+            © {{ date('Y') }} PMI Kabupaten Bekasi.<br>
             Sistem Dispatch Ambulans — Untuk Kemanusiaan.<br>
             <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: +62 812-8685-8680</div>
             <div class="mt-4">

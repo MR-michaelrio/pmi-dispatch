@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah User | GMCI Admin')
+@section('title', 'Tambah User | PMI Kabupaten Bekasi Admin')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,7 +11,7 @@
             👤 Tambah User Baru
         </h1>
         <p class="text-gray-500 text-sm mt-1">
-            Buat akun pengguna baru untuk sistem GMCI
+            Buat akun pengguna baru untuk sistem PMI Kabupaten Bekasi
         </p>
     </div>
 

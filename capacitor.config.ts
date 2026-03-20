@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.gmci.dispatch',
-  appName: 'GMCI DISPATCH',
+  appName: 'PMI Kabupaten Bekasi DISPATCH',
   webDir: 'public',
   server: {
     androidScheme: 'https',

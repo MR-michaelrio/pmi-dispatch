@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Kebijakan Privasi & Penghapusan Data | GMCI</title>
+    <title>Kebijakan Privasi & Penghapusan Data | PMI Kabupaten Bekasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +13,7 @@
 
     <div class="max-w-3xl mx-auto px-6 py-12">
         <div class="text-center mb-10">
-            <img src="/logo-pmi.png" alt="GMCI Logo" class="h-16 mx-auto mb-4">
+            <img src="/logo-pmi.png" alt="PMI Kabupaten Bekasi Logo" class="h-16 mx-auto mb-4">
             <h1 class="text-3xl font-extrabold text-gray-900">Kebijakan Privasi & Penghapusan Data</h1>
             <p class="text-gray-500 mt-2">PMI Kabupaten Bekasi Dispatch</p>
         </div>
@@ -24,7 +24,7 @@
                 <h2 class="text-xl font-bold text-gray-800 mb-3 underline decoration-emerald-500">1. Penghapusan Akun &
                     Data</h2>
                 <p class="leading-relaxed text-gray-600 mb-4">
-                    Demi keamanan operasional, akun aplikasi GMCI Dispatch (Admin dan Driver) dikelola secara terpusat
+                    Demi keamanan operasional, akun aplikasi PMI Kabupaten Bekasi Dispatch (Admin dan Driver) dikelola secara terpusat
                     oleh administrator. Kami menyediakan hak bagi pengguna untuk meminta penghapusan akun dan seluruh
                     data terkait.
                 </p>
@@ -73,7 +73,7 @@
 
         <div class="mt-12 text-center text-sm text-gray-400">
             <a href="/" class="text-emerald-600 font-bold hover:underline"> Kembali ke Beranda</a>
-            <p class="mt-4">© {{ date('Y') }} Global Medical Care Indonesia.</p>
+            <p class="mt-4">© {{ date('Y') }} PMI Kabupaten Bekasi.</p>
         </div>
     </div>
 
