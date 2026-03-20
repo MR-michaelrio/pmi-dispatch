@@ -67,10 +67,10 @@
             </p>
 
             <p class="text-gray-600 mb-8">
-                Dikembangkan untuk mendukung misi kemanusiaan
+                Dikembangkan untuk mendukung misi kemanusiaan oleh
                 <strong>Yayasan Global Medical Care Indonesia</strong>
-                dalam memberikan pelayanan medis yang cepat, tepat,
-                dan terkoordinasi bagi masyarakat.
+                sistem ini hadir sebagai wujud dukungan terhadap misi kemanusiaan dalam menghadirkan layanan medis yang
+                cepat, tepat, dan terkoordinasi bagi masyarakat.
             </p>
 
             <div class="flex flex-wrap gap-4">
@@ -79,9 +79,9 @@
                     🚑 Buat Permintaan Layanan
                 </a>
 
-                <a href="#tentang"
+                <a href="https://www.pmikabupatenbekasi.com/"
                     class="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold">
-                    ℹ️ Tentang GMCI
+                    ℹ️ Tentang PMI Kabupaten Bekasi
                 </a>
             </div>
         </div>
