@@ -29,6 +29,26 @@ class PatientRequestController extends Controller
 
         PatientRequest::create($validated);
 
+        // Send Push Notification
+        try {
+            $tokens = \App\Models\Ambulance::whereNotNull('fcm_token')
+                ->where('fcm_token', '!=', '')
+                ->pluck('fcm_token')->toArray();
+
+            if (!empty($tokens)) {
+                $messaging = app('firebase.messaging');
+                $message = \Kreait\Firebase\Messaging\CloudMessage::new()
+                    ->withNotification(\Kreait\Firebase\Messaging\Notification::create(
+                        'Permintaan Pasien Baru',
+                        "Pasien: {$validated['patient_name']} ({$validated['pickup_address']})"
+                    ));
+
+                $messaging->sendMulticast($message, $tokens);
+            }
+        } catch (\Exception $e) {
+            \Log::error('FCM Send Error: ' . $e->getMessage());
+        }
+
         return redirect()->route('patient-request.create')
             ->with('success', 'Permintaan Anda telah dikirim. Kami akan segera menghubungi Anda.');
     }

@@ -182,4 +182,7 @@ Route::middleware(['auth:ambulance'])->prefix('driver')->name('driver.')->group(
     Route::get('/dispatching', [DriverDashboardController::class, 'dispatching'])->name('dispatching');
     Route::get('/dispatching/{patientRequest}', [DriverDashboardController::class, 'createSelfDispatch'])->name('patient-requests.create-dispatch');
     Route::post('/dispatching/{patientRequest}', [DriverDashboardController::class, 'storeSelfDispatch'])->name('patient-requests.store-dispatch');
+    
+    // Save FCM Token
+    Route::post('/fcm-token', [DriverDashboardController::class, 'saveFcmToken'])->name('fcm-token.save');
 });

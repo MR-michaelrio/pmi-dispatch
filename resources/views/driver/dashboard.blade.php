@@ -272,14 +272,54 @@ if (!window.isSecureContext && !isCapacitor && window.location.hostname !== 'loc
 }
 
 async function initializeCapacitorTracking() {
-    if (!isCapacitor || !CapacitorPlugins.BackgroundGeolocation) return;
+    if (!isCapacitor) return;
 
-    const { BackgroundGeolocation } = CapacitorPlugins;
+    if (CapacitorPlugins.BackgroundGeolocation) {
+        try {
+            await CapacitorPlugins.BackgroundGeolocation.requestPermissions();
+        } catch (e) {
+            console.error('Failed to request Geolocation permissions:', e);
+        }
+    }
 
-    try {
-        await BackgroundGeolocation.requestPermissions();
-    } catch (e) {
-        console.error('Failed to request Capacitor permissions:', e);
+    if (CapacitorPlugins.PushNotifications) {
+        const { PushNotifications } = CapacitorPlugins;
+        try {
+            let permStatus = await PushNotifications.checkPermissions();
+            if (permStatus.receive === 'prompt') {
+                permStatus = await PushNotifications.requestPermissions();
+            }
+            if (permStatus.receive !== 'granted') {
+                console.warn('Push registration failed: permission denied');
+            } else {
+                PushNotifications.addListener('registration', (token) => {
+                    console.log('Push registration success, token: ' + token.value);
+                    fetch('/driver/fcm-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ token: token.value })
+                    }).catch(err => console.error('Failed to save FCM token:', err));
+                });
+
+                PushNotifications.addListener('registrationError', (error) => {
+                    console.error('Push registration error: ', JSON.stringify(error));
+                });
+
+                PushNotifications.addListener('pushNotificationReceived', (notification) => {
+                    // Optional: show native alert or toast here
+                    console.log('Push received: ', notification);
+                    alert("Notifikasi Baru:\n" + notification.title + "\n" + notification.body);
+                });
+
+                await PushNotifications.register();
+            }
+        } catch (e) {
+            console.error('Failed to initialize push notifications:', e);
+        }
     }
 }
 

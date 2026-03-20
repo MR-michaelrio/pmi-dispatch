@@ -209,4 +209,19 @@ class DriverDashboardController extends Controller
 
         return redirect()->route('driver.dashboard')->with('success', 'Penugasan berhasil dibuat!');
     }
+
+    public function saveFcmToken(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        $ambulance = auth('ambulance')->user();
+        if ($ambulance) {
+            $ambulance->update(['fcm_token' => $request->token]);
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 401);
+    }
 }

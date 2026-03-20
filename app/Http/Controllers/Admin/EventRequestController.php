@@ -253,6 +253,26 @@ class EventRequestController extends Controller
 
         EventRequest::create($validated + ['status' => 'pending']);
 
+        // Send Push Notification
+        try {
+            $tokens = \App\Models\Ambulance::whereNotNull('fcm_token')
+                ->where('fcm_token', '!=', '')
+                ->pluck('fcm_token')->toArray();
+
+            if (!empty($tokens)) {
+                $messaging = app('firebase.messaging');
+                $message = \Kreait\Firebase\Messaging\CloudMessage::new()
+                    ->withNotification(\Kreait\Firebase\Messaging\Notification::create(
+                        $validated['type'] === 'disaster' ? '🚨 Laporan Disaster Baru' : '📅 Permintaan Event Baru',
+                        "Kegiatan: {$validated['event_name']} ({$validated['needs']})"
+                    ));
+
+                $messaging->sendMulticast($message, $tokens);
+            }
+        } catch (\Exception $e) {
+            \Log::error('FCM Send Error: ' . $e->getMessage());
+        }
+
         return redirect()->route('portal')->with('success', 'Permintaan Anda telah terkirim dan akan segera kami tinjau.');
     }
 }
