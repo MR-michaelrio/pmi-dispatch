@@ -53,7 +53,9 @@
                         {{ $request->patient_name }}
                     </h3>
                     <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mt-1">
-                        🕒 JEMPUT: {{ $request->pickup_time ? \Carbon\Carbon::parse($request->pickup_time)->format('H:i') : '-' }} WIB
+                        📅 {{ $request->request_date ? \Carbon\Carbon::parse($request->request_date)->translatedFormat('d M Y') : '-' }}
+                        &nbsp;·&nbsp;
+                        🕒 {{ $request->pickup_time ? \Carbon\Carbon::parse($request->pickup_time)->format('H:i') : '-' }} WIB
                     </p>
                     
                     <div class="mt-3 space-y-2 text-sm text-gray-600">
