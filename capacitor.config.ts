@@ -6,9 +6,9 @@ const config: CapacitorConfig = {
   webDir: 'public',
   server: {
     androidScheme: 'https',
-    url: 'https://dispatch.gmci.my.id',
+    url: 'https://dispatch.gmci.or.id',
     allowNavigation: [
-      'dispatch.gmci.my.id'
+      'dispatch.gmci.or.id'
     ],
     cleartext: true
   }
