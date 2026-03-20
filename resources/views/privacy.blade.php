@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Kebijakan Privasi & Penghapusan Data | GMCI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
     <div class="max-w-3xl mx-auto px-6 py-12">
         <div class="text-center mb-10">
-            <img src="/logo.png" alt="GMCI Logo" class="h-16 mx-auto mb-4">
+            <img src="/logo-pmi.png" alt="GMCI Logo" class="h-16 mx-auto mb-4">
             <h1 class="text-3xl font-extrabold text-gray-900">Kebijakan Privasi & Penghapusan Data</h1>
             <p class="text-gray-500 mt-2">Global Medical Care Indonesia (GMCI) Dispatch</p>
         </div>

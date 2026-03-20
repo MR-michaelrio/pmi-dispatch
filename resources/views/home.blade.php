@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>GMCI Dispatch | Global Medical Care Indonesia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +38,7 @@
 
             <!-- LOGO + NAME -->
             <div class="flex items-center gap-4">
-                <img src="/logo.png" alt="GMCI Logo" class="h-10">
+                <img src="/logo-pmi.png" alt="GMCI Logo" class="h-10">
             </div>
 
             <!-- LOGIN -->

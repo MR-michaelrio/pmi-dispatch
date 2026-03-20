@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Portal GMCI | Global Medical Care Indonesia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .fade-up {
@@ -32,7 +33,7 @@
         <div class="max-w-4xl w-full">
             
             <div class="text-center mb-12 fade-up">
-                <img src="/logo.png" alt="GMCI Logo" class="h-16 mx-auto mb-4">
+                <img src="/logo-pmi.png" alt="GMCI Logo" class="h-16 mx-auto mb-4">
                 <h1 class="text-3xl font-bold text-gray-900">Portal Operasional</h1>
                 <p class="text-gray-500">Silakan pilih akses yang sesuai dengan peran Anda</p>
             </div>

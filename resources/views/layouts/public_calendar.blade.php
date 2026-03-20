@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jadwal Unit | GMCI</title>
+    <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <meta http-equiv="refresh" content="60"> {{-- Auto Refresh every 60s --}}
 </head>
@@ -11,7 +12,7 @@
     <header class="bg-white border-b shadow-sm py-4 mb-6">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="/logo.png" alt="GMCI Logo" class="h-8">
+                <img src="/logo-pmi.png" alt="GMCI Logo" class="h-8">
                 <span class="font-bold text-gray-700">Jadwal Operasional GMCI</span>
             </div>
             <a href="{{ route('portal') }}" class="text-emerald-600 font-bold text-sm">← Kembali ke Portal</a>
