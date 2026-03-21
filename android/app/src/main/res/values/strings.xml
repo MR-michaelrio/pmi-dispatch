@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">PMI Kabupaten Bekasi DISPATCH</string>
     <string name="title_activity_main">PMI Kabupaten Bekasi DISPATCH</string>
-    <string name="package_name">com.gmci.dispatch</string>
-    <string name="custom_url_scheme">com.gmci.dispatch</string>
+    <string name="package_name">com.pmikabbekasi.dispatch</string>
+    <string name="custom_url_scheme">com.pmikabbekasi.dispatch</string>
 </resources>

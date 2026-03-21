@@ -1,4 +1,4 @@
-package com.gmci.dispatch;
+package com.pmikabbekasi.dispatch;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,14 +1,14 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.gmci.dispatch',
+  appId: 'com.pmikabbekasi.dispatch',
   appName: 'PMI Kabupaten Bekasi DISPATCH',
   webDir: 'public',
   server: {
     androidScheme: 'https',
-    url: 'https://dispatch.gmci.or.id',
+    url: 'https://pmi.my.id',
     allowNavigation: [
-      'dispatch.gmci.or.id'
+      'pmi.my.id'
     ],
     cleartext: true
   }
