@@ -33,7 +33,7 @@
                         Penghapusan:</h3>
                     <p class="text-emerald-700">
                         Silakan hubungi Administrator kami melalui:
-                        <br><strong>WhatsApp:</strong> +62 895-3766-76777
+                        <br><strong>WhatsApp:</strong> <a href="https://wa.me/62895376676777" target="_blank" class="hover:underline text-emerald-600 font-bold">+62 895-3766-76777</a>
                         <br><strong>Email:</strong> iptrunkbackup@gmail.com (Subject: Request Hapus Akun)
                     </p>
                 </div>
