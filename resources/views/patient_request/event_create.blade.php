@@ -95,7 +95,7 @@
         </div>
 
         <footer class="mt-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
-            © {{ date('Y') }} PMI Kabupaten Bekasi
+            © {{ date('Y') }} Global Medical Care Indonesia
         </footer>
     </div>
 

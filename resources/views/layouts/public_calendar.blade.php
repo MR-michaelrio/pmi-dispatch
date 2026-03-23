@@ -24,7 +24,7 @@
     </main>
 
     <footer class="py-8 text-center text-xs text-gray-400">
-        © {{ date('Y') }} PMI Kabupaten Bekasi
+        © {{ date('Y') }} Global Medical Care Indonesia
     </footer>
 </body>
 </html>

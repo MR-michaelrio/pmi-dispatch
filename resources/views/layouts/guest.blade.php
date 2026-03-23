@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Ambulance Dispatch PMI Kabupaten Bekasi') }}</title>
+    <title>{{ config('app.name', 'Global Medical Care Indonesia') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,7 +22,7 @@
         <div>
             <a href="/">
                 <h1 class="text-2xl font-bold text-blue-600">
-                    Ambulance Dispatch PMI Kabupaten Bekasi
+                    Ambulance Dispatch Global Medical Care Indonesia
                 </h1>
             </a>
         </div>

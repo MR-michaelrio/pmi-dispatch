@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<h2>Laporan Dispatch Ambulance PMI Kabupaten Bekasi</h2>
+<h2>Laporan Dispatch Ambulance Global Medical Care Indonesia</h2>
 
 <table>
     <thead>

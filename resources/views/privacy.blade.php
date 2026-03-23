@@ -73,7 +73,7 @@
 
         <div class="mt-12 text-center text-sm text-gray-400">
             <a href="/" class="text-emerald-600 font-bold hover:underline"> Kembali ke Beranda</a>
-            <p class="mt-4">© {{ date('Y') }} PMI Kabupaten Bekasi.</p>
+            <p class="mt-4">© {{ date('Y') }} Global Medical Care Indonesia.</p>
         </div>
     </div>
 

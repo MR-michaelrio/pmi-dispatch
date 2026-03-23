@@ -135,7 +135,7 @@
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-300">
         <div class="max-w-7xl mx-auto px-6 py-8 text-center text-sm">
-            © {{ date('Y') }} PMI Kabupaten Bekasi.<br>
+            © {{ date('Y') }} Global Medical Care Indonesia.<br>
             Sistem Dispatch Ambulans — Untuk Kemanusiaan.<br>
             <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: <a href="https://wa.me/62895376676777" target="_blank" class="text-emerald-400 hover:text-emerald-300 underline">+62 895-3766-76777</a></div>
             <div class="mt-4">

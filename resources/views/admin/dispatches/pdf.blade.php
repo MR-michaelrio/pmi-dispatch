@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<h2>Laporan Dispatch Ambulans PMI Kabupaten Bekasi</h2>
+<h2>Laporan Dispatch Ambulans Global Medical Care Indonesia</h2>
 <p>Tanggal cetak: {{ now()->format('d-m-Y H:i') }}</p>
 
 <table>
