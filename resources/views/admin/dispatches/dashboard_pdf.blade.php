@@ -49,6 +49,16 @@
         <div class="analytics-label">{{ $a->plate_number }}</div>
         <div class="analytics-count">{{ $a->dispatches_count }}</div>
         <div class="analytics-label">KALI KELUAR</div>
+        
+        @if($a->condition_breakdown->isNotEmpty())
+        <div style="margin-top: 5px; border-top: 1px solid #eee; padding-top: 5px;">
+            @foreach($a->condition_breakdown as $condition => $count)
+            <div style="font-size: 8px; color: #4a5568;">
+                {{ $condition }}: <strong>{{ $count }}</strong>
+            </div>
+            @endforeach
+        </div>
+        @endif
     </div>
     @endforeach
 </div>

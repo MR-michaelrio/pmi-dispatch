@@ -157,15 +157,22 @@ class DispatchController extends Controller
         $dispatches = $query->orderByDesc('created_at')->get();
 
         // Ambulance Analytics for the period
-        $analytics = Ambulance::withCount(['dispatches' => function ($q) use ($startDate, $endDate) {
+        $analytics = Ambulance::with(['dispatches' => function ($q) use ($startDate, $endDate) {
             if ($startDate && $endDate) {
                 $q->whereBetween('created_at', [$startDate, $endDate]);
             } else {
-                // If no range, default to month for analytics consistency
                 $q->whereMonth('created_at', Carbon::now()->month)
                   ->whereYear('created_at', Carbon::now()->year);
             }
-        }])->get();
+        }])->get()->map(function($ambulance) {
+            $ambulance->dispatches_count = $ambulance->dispatches->count();
+            $ambulance->condition_breakdown = $ambulance->dispatches
+                ->groupBy('patient_condition')
+                ->map(function ($items) {
+                    return $items->count();
+                });
+            return $ambulance;
+        });
 
         $pdf = Pdf::loadView('admin.dispatches.dashboard_pdf', compact('dispatches', 'analytics', 'title', 'range'));
 
