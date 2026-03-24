@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('ambulances', AmbulanceController::class);
         Route::get('ambulances/{ambulance}/maintenance', [AmbulanceMaintenanceController::class, 'index'])->name('ambulances.maintenance.index');
         Route::post('ambulances/{ambulance}/maintenance', [AmbulanceMaintenanceController::class, 'store'])->name('ambulances.maintenance.store');
+        Route::put('maintenance/{maintenance}', [AmbulanceMaintenanceController::class, 'update'])->name('maintenance.update');
         Route::delete('maintenance/{maintenance}', [AmbulanceMaintenanceController::class, 'destroy'])->name('maintenance.destroy');
         
         Route::resource('drivers', DriverController::class);

@@ -18,7 +18,7 @@ class AmbulanceMaintenance extends Model
 
     protected $casts = [
         'spare_parts' => 'array',
-        'maintenance_date' => 'date',
+        'maintenance_date' => 'date:Y-m-d',
     ];
 
     public function ambulance()

@@ -73,7 +73,11 @@
                                     <span class="text-gray-400 italic text-xs">Tidak ada</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 text-right">
+                            <td class="px-6 py-4 text-right space-x-2">
+                                <button onclick="editMaintenance({{ json_encode($maintenance) }})" 
+                                        class="text-blue-600 hover:text-blue-800 font-bold">
+                                    Edit
+                                </button>
                                 <form action="{{ route('admin.maintenance.destroy', $maintenance) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
@@ -148,7 +152,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" onclick="addSparepart()" 
+                <button type="button" onclick="addSparepart('spareparts-container')" 
                         class="text-blue-600 text-sm font-bold hover:text-blue-800 transition flex items-center gap-1 mt-2">
                     <span>+</span> Tambah Sparepart
                 </button>
@@ -166,13 +170,76 @@
     </div>
 </div>
 
+<!-- Edit Maintenance Modal -->
+<div id="editMaintenanceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b flex justify-between items-center bg-gray-50">
+            <h2 class="text-xl font-bold text-gray-800">Edit Riwayat Perbaikan</h2>
+            <button onclick="document.getElementById('editMaintenanceModal').classList.add('hidden')" 
+                    class="text-gray-500 hover:text-gray-800 text-2xl font-bold leading-none">&times;</button>
+        </div>
+        
+        <form id="editForm" method="POST" class="p-6 space-y-4">
+            @csrf
+            @method('PUT')
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tanggal Perbaikan</label>
+                    <input type="date" name="maintenance_date" id="edit_date" required 
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Jenis Perbaikan</label>
+                    <input type="text" name="maintenance_type" id="edit_type" required 
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Bengkel</label>
+                    <input type="text" name="workshop" id="edit_workshop" required 
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Biaya (Rp)</label>
+                    <input type="number" name="cost" id="edit_cost" required 
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Odometer (km)</label>
+                    <input type="number" name="odometer" id="edit_odometer" required 
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-gray-700">Sparepart Perbaikan</label>
+                <div id="edit-spareparts-container" class="space-y-2">
+                    <!-- Dynamic fields will be added here -->
+                </div>
+                <button type="button" onclick="addSparepart('edit-spareparts-container')" 
+                        class="text-blue-600 text-sm font-bold hover:text-blue-800 transition flex items-center gap-1 mt-2">
+                    <span>+</span> Tambah Sparepart
+                </button>
+            </div>
+
+            <div class="pt-4 border-t flex justify-end gap-3">
+                <button type="button" onclick="document.getElementById('editMaintenanceModal').classList.add('hidden')"
+                        class="px-4 py-2 text-gray-500 font-semibold hover:text-gray-700">Batal</button>
+                <button type="submit" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold shadow-md transition">
+                    Simpan Perubahan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
-    function addSparepart() {
-        const container = document.getElementById('spareparts-container');
+    function addSparepart(containerId, value = '') {
+        const container = document.getElementById(containerId);
         const div = document.createElement('div');
         div.className = 'flex gap-2';
         div.innerHTML = `
-            <input type="text" name="spare_parts[]" placeholder="Nama sparepart" 
+            <input type="text" name="spare_parts[]" value="${value}" placeholder="Nama sparepart" 
                    class="flex-1 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             <button type="button" onclick="removeSparepart(this)" 
                     class="bg-red-50 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition">
@@ -184,6 +251,30 @@
 
     function removeSparepart(button) {
         button.parentElement.remove();
+    }
+
+    function editMaintenance(maintenance) {
+        const form = document.getElementById('editForm');
+        form.action = `/admin/maintenance/${maintenance.id}`;
+        
+        document.getElementById('edit_date').value = maintenance.maintenance_date.substring(0, 10);
+        document.getElementById('edit_type').value = maintenance.maintenance_type;
+        document.getElementById('edit_workshop').value = maintenance.workshop;
+        document.getElementById('edit_cost').value = Math.round(maintenance.cost);
+        document.getElementById('edit_odometer').value = maintenance.odometer;
+
+        const container = document.getElementById('edit-spareparts-container');
+        container.innerHTML = '';
+        
+        if (maintenance.spare_parts && maintenance.spare_parts.length > 0) {
+            maintenance.spare_parts.forEach(part => {
+                addSparepart('edit-spareparts-container', part);
+            });
+        } else {
+            addSparepart('edit-spareparts-container');
+        }
+
+        document.getElementById('editMaintenanceModal').classList.remove('hidden');
     }
 </script>
 @endsection

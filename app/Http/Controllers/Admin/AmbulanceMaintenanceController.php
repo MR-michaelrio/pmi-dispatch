@@ -31,6 +31,22 @@ class AmbulanceMaintenanceController extends Controller
         return redirect()->back()->with('success', 'Riwayat perbaikan berhasil ditambahkan');
     }
 
+    public function update(Request $request, AmbulanceMaintenance $maintenance)
+    {
+        $validated = $request->validate([
+            'maintenance_date' => 'required|date',
+            'maintenance_type' => 'required|string',
+            'workshop'         => 'required|string',
+            'cost'             => 'required|numeric',
+            'spare_parts'      => 'nullable|array',
+            'odometer'         => 'required|integer',
+        ]);
+
+        $maintenance->update($validated);
+
+        return redirect()->back()->with('success', 'Riwayat perbaikan berhasil diperbarui');
+    }
+
     public function destroy(AmbulanceMaintenance $maintenance)
     {
         $maintenance->delete();
