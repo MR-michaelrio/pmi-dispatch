@@ -148,6 +148,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('event-requests.finish');
         Route::post('event-requests/{eventRequest}/replace-unit/{dispatch}', [\App\Http\Controllers\Admin\EventRequestController::class, 'replaceUnit'])
             ->name('event-requests.replace-unit');
+        Route::post('event-requests/{eventRequest}/remove-unit/{dispatch}', [\App\Http\Controllers\Admin\EventRequestController::class, 'removeUnit'])
+            ->name('event-requests.remove-unit');
 
         // Patient Requests Management
         Route::get('patient-requests', [AdminPatientRequestController::class, 'index'])

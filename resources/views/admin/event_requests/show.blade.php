@@ -161,11 +161,20 @@
 
                                     {{-- Replace Unit Button — triggers a fixed modal --}}
                                     @if(!in_array($d->status, ['completed']))
-                                        <button
-                                            onclick="openReplaceModal({{ $d->id }}, '{{ $d->ambulance?->code ?? '?' }}')"
-                                            class="text-xs font-black text-orange-600 border border-orange-200 rounded-lg px-3 py-1.5 hover:bg-orange-50 transition shrink-0">
-                                            🔄 Ganti Unit
-                                        </button>
+                                        <div class="flex items-center gap-2 shrink-0">
+                                            <button
+                                                onclick="openReplaceModal({{ $d->id }}, '{{ $d->ambulance?->code ?? '?' }}')"
+                                                class="text-xs font-black text-orange-600 border border-orange-200 rounded-lg px-3 py-1.5 hover:bg-orange-50 transition">
+                                                🔄 Ganti Unit
+                                            </button>
+
+                                            <form action="{{ route('admin.event-requests.remove-unit', [$eventRequest, $d]) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus armada ini dari kegiatan? Armada akan dibebaskan dan riwayat penugasan ini akan dihapus.')">
+                                                @csrf
+                                                <button type="submit" class="text-xs font-black text-red-600 border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-50 transition">
+                                                    🗑️ Hapus
+                                                </button>
+                                            </form>
+                                        </div>
 
                                         {{-- Hidden form for this dispatch — submitted via modal --}}
                                         <form id="replace-form-{{ $d->id }}"
