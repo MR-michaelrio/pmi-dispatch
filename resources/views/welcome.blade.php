@@ -21,8 +21,8 @@
         </h1>
 
         <p class="text-gray-600 mb-6 text-center max-w-md">
-            Sistem dispatch ambulans untuk mendukung pelayanan cepat dan terkoordinasi
-            di Global Medical Care Indonesia.
+            Sistem dispatch ambulans PMI Kabupaten Bekasi.
+            Supported by Global Medical Care Indonesia.
         </p>
 
         <div class="flex space-x-4">

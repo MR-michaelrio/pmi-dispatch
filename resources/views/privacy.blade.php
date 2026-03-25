@@ -10,9 +10,9 @@
 
     <div class="max-w-3xl mx-auto px-6 py-12">
         <div class="text-center mb-10">
-            <img src="/logo.png" alt="PMI Kabupaten Bekasi Logo" class="h-16 mx-auto mb-4">
+            <img src="{{ asset('logo-pmi.png') }}" alt="PMI Kabupaten Bekasi Logo" class="h-16 mx-auto mb-4">
             <h1 class="text-3xl font-extrabold text-gray-900">Kebijakan Privasi & Penghapusan Data</h1>
-            <p class="text-gray-500 mt-2">Global Medical Care Indonesia (PMI Kabupaten Bekasi) Dispatch</p>
+            <p class="text-gray-500 mt-2">PMI Kabupaten Bekasi Dispatch (Supported by Global Medical Care Indonesia)</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
@@ -61,7 +61,7 @@
 
         <div class="mt-12 text-center text-sm text-gray-400">
             <a href="/" class="text-emerald-600 font-bold hover:underline"> Kembali ke Beranda</a>
-            <p class="mt-4">© {{ date('Y') }} Global Medical Care Indonesia.</p>
+            <p class="mt-4">© {{ date('Y') }} PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.</p>
         </div>
     </div>
 

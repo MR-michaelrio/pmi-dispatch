@@ -16,7 +16,7 @@
             🚑 Form Permintaan Layanan
         </h1>
         <p class="text-gray-600">
-            PMI Kabupaten Bekasi - Global Medical Care Indonesia
+            PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.
         </p>
     </div>
 

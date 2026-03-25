@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Portal PMI Kabupaten Bekasi | Global Medical Care Indonesia</title>
+    <title>Portal PMI Kabupaten Bekasi Dispatch (Supported by Global Medical Care Indonesia)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -32,7 +32,7 @@
         <div class="max-w-4xl w-full">
             
             <div class="text-center mb-12 fade-up">
-                <img src="/logo.png" alt="PMI Kabupaten Bekasi Logo" class="h-16 mx-auto mb-4">
+                <img src="{{ asset('logo-pmi.png') }}" alt="PMI Kabupaten Bekasi Logo" class="h-16 mx-auto mb-4">
                 <h1 class="text-3xl font-bold text-gray-900">Portal Operasional</h1>
                 <p class="text-gray-500">Silakan pilih akses yang sesuai dengan peran Anda</p>
             </div>
@@ -106,7 +106,7 @@
 
     <!-- Footer -->
     <footer class="py-8 text-center text-xs text-gray-400">
-        © {{ date('Y') }} Global Medical Care Indonesia.
+        © {{ date('Y') }} PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.
     </footer>
 
     <script>

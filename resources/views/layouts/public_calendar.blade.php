@@ -11,7 +11,7 @@
     <header class="bg-white border-b shadow-sm py-4 mb-6">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="/logo.png" alt="PMI Kabupaten Bekasi Logo" class="h-8">
+                <img src="{{ asset('logo-pmi.png') }}" alt="PMI Kabupaten Bekasi Logo" class="h-8">
                 <span class="font-bold text-gray-700">Jadwal Operasional PMI Kabupaten Bekasi</span>
             </div>
             <a href="{{ route('portal') }}" class="text-emerald-600 font-bold text-sm">← Kembali ke Portal</a>
@@ -23,7 +23,7 @@
     </main>
 
     <footer class="py-8 text-center text-xs text-gray-400">
-        © {{ date('Y') }} Global Medical Care Indonesia
+        © {{ date('Y') }} PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.
     </footer>
 </body>
 </html>

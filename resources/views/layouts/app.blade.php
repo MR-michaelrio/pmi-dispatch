@@ -7,6 +7,8 @@
 
     <title>@yield('title', config('app.name', 'Ambulance Dispatch PMI Kabupaten Bekasi'))</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('logo-pmi-kecil.png') }}">
+
     <!-- Tailwind CSS (CDN, tanpa Vite) -->
     <script src="https://cdn.tailwindcss.com"></script>
 

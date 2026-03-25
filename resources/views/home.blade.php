@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>PMI Kabupaten Bekasi Dispatch | Global Medical Care Indonesia</title>
+    <title>PMI Kabupaten Bekasi Dispatch | Supported by Global Medical Care Indonesia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Tailwind CDN -->
@@ -34,7 +34,7 @@
 
             <!-- LOGO + NAME -->
             <div class="flex items-center gap-4">
-                <img src="/logo.png" alt="PMI Kabupaten Bekasi Logo" class="h-10">
+                <img src="{{ asset('logo-pmi.png') }}" alt="PMI Kabupaten Bekasi Logo" class="h-10">
             </div>
 
             <!-- LOGIN -->
@@ -52,8 +52,9 @@
         <div class="fade-up">
             <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-6">
                 Sistem Dispatch Ambulans<br>
-                <span class="text-emerald-600">Global Medical Care Indonesia</span>
+                <span class="text-emerald-600">PMI Kabupaten Bekasi</span>
             </h1>
+            <p class="text-sm text-gray-500 -mt-4 mb-6">Supported by Global Medical Care Indonesia</p>
 
             <p class="text-lg text-gray-600 mb-6 leading-relaxed">
                 Aplikasi ini digunakan untuk mengelola dan memantau
@@ -131,7 +132,8 @@
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-300">
         <div class="max-w-7xl mx-auto px-6 py-8 text-center text-sm">
-            © {{ date('Y') }} Global Medical Care Indonesia.<br>
+            © {{ date('Y') }} PMI Kabupaten Bekasi.<br>
+            Supported by Global Medical Care Indonesia.<br>
             Sistem Dispatch Ambulans — Untuk Kemanusiaan.<br>
             <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: +62 812-8685-8680</div>
             <div class="mt-4">
