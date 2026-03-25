@@ -8,6 +8,16 @@
         </h1>
     </div>
 
+    @if($errors->any())
+        <div class="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 font-bold rounded-r-lg text-sm">
+            <ul class="list-disc list-inside">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="bg-white shadow rounded-xl p-8 border border-gray-100">
         <form method="POST" action="{{ isset($eventRequest) ? route('admin.event-requests.update', $eventRequest) : route('admin.event-requests.store') }}" class="space-y-6">
             @csrf
@@ -40,6 +50,14 @@
                         <input type="date" name="end_date" value="{{ old('end_date', isset($eventRequest) ? $eventRequest->end_date->format('Y-m-d') : '') }}" 
                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 font-medium" required>
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1 uppercase tracking-wider">Tipe Kegiatan</label>
+                    <select name="type" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 font-bold" required>
+                        <option value="event" {{ (old('type', $eventRequest->type ?? '') === 'event') ? 'selected' : '' }}>Event / Pengawalan</option>
+                        <option value="disaster" {{ (old('type', $eventRequest->type ?? '') === 'disaster') ? 'selected' : '' }}>Bencana (Disaster)</option>
+                    </select>
                 </div>
 
                 @if(isset($eventRequest))

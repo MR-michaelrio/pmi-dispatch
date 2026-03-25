@@ -197,6 +197,33 @@ class EventRequestController extends Controller
     }
 
     /**
+     * Remove an active unit from the event completely.
+     */
+    public function removeUnit(EventRequest $eventRequest, Dispatch $dispatch)
+    {
+        if ($dispatch->event_request_id !== $eventRequest->id) {
+            abort(403);
+        }
+
+        // Free up ambulance and driver if the dispatch is not completed
+        if (!in_array($dispatch->status, ['completed'])) {
+            if ($dispatch->ambulance) {
+                $dispatch->ambulance->update(['status' => 'ready']);
+            }
+            if ($dispatch->driver) {
+                $dispatch->driver->update(['status' => 'available']);
+            }
+        }
+
+        // Clean up logs and delete the dispatch
+        $dispatch->logs()->delete();
+        $dispatch->delete();
+
+        return redirect()->route('admin.event-requests.show', $eventRequest)
+                         ->with('success', 'Armada berhasil dihapus dari kegiatan.');
+    }
+
+    /**
      * Complete the event manually.
      */
     public function finish(EventRequest $eventRequest)
