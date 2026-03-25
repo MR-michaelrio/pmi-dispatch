@@ -39,6 +39,16 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div class="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 font-bold rounded-r-lg text-sm">
+            <ul class="list-disc list-inside">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {{-- Left: Assign New Unit --}}
@@ -246,7 +256,19 @@
         document.getElementById('modal-unit-label').textContent = unitCode;
         document.getElementById('modal-amb-select').value  = '';
         document.getElementById('modal-drv-select').value  = '';
-        document.getElementById('modal-date-input').value = new Date().toISOString().split('T')[0];
+        
+        let todayStr = new Date().toISOString().split('T')[0];
+        const minDate = "{{ $eventRequest->start_date->format('Y-m-d') }}";
+        const maxDate = "{{ $eventRequest->end_date->format('Y-m-d') }}";
+
+        let defaultDate = todayStr;
+        if (todayStr < minDate) {
+            defaultDate = minDate;
+        } else if (todayStr > maxDate) {
+            defaultDate = maxDate;
+        }
+
+        document.getElementById('modal-date-input').value = defaultDate;
         document.getElementById('modal-reason-input').value = '';
         document.getElementById('replace-modal').classList.remove('hidden');
     }
