@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.pmikabbekasi.dispatch"
+    namespace "com.gmci.dispatch"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.pmikabbekasi.dispatch"
+        applicationId "com.gmci.dispatch"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
-    <title>PMI Kabupaten Bekasi Dispatch | PMI Kabupaten Bekasi</title>
+    <title>PMI Kabupaten Bekasi Dispatch | Global Medical Care Indonesia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,13 +13,11 @@
         .fade-up {
             animation: fadeUp 1s ease-out both;
         }
-
         @keyframes fadeUp {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -38,12 +34,12 @@
 
             <!-- LOGO + NAME -->
             <div class="flex items-center gap-4">
-                <img src="/logo-pmi.png" alt="PMI Kabupaten Bekasi Logo" class="h-10">
+                <img src="/logo.png" alt="PMI Kabupaten Bekasi Logo" class="h-10">
             </div>
 
             <!-- LOGIN -->
             <a href="{{ route('portal') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm shadow">
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm shadow">
                 🔐 Portal Login
             </a>
         </div>
@@ -56,7 +52,7 @@
         <div class="fade-up">
             <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-6">
                 Sistem Dispatch Ambulans<br>
-                <span class="text-emerald-600">PMI Kabupaten Bekasi</span>
+                <span class="text-emerald-600">Global Medical Care Indonesia</span>
             </h1>
 
             <p class="text-lg text-gray-600 mb-6 leading-relaxed">
@@ -67,20 +63,20 @@
             </p>
 
             <p class="text-gray-600 mb-8">
-                Dikembangkan untuk mendukung misi kemanusiaan oleh
+                Dikembangkan untuk mendukung misi kemanusiaan
                 <strong>Yayasan Global Medical Care Indonesia</strong>
-                sistem ini hadir sebagai wujud dukungan terhadap misi kemanusiaan dalam menghadirkan layanan medis yang
-                cepat, tepat, dan terkoordinasi bagi masyarakat.
+                dalam memberikan pelayanan medis yang cepat, tepat,
+                dan terkoordinasi bagi masyarakat.
             </p>
 
             <div class="flex flex-wrap gap-4">
                 <a href="{{ route('patient-request.create') }}"
-                    class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow">
+                   class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow">
                     🚑 Buat Permintaan Layanan
                 </a>
 
-                <a href="https://www.pmikabupatenbekasi.com/"
-                    class="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold">
+                <a href="#tentang"
+                   class="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold">
                     ℹ️ Tentang PMI Kabupaten Bekasi
                 </a>
             </div>
@@ -137,10 +133,9 @@
         <div class="max-w-7xl mx-auto px-6 py-8 text-center text-sm">
             © {{ date('Y') }} Global Medical Care Indonesia.<br>
             Sistem Dispatch Ambulans — Untuk Kemanusiaan.<br>
-            <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: <a href="https://wa.me/62895376676777" target="_blank" class="text-emerald-400 hover:text-emerald-300 underline">+62 895-3766-76777</a></div>
+            <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: +62 812-8685-8680</div>
             <div class="mt-4">
-                <a href="{{ route('privacy') }}" class="text-xs hover:text-white underline">Kebijakan Privasi &
-                    Penghapusan Data</a>
+                <a href="{{ route('privacy') }}" class="text-xs hover:text-white underline">Kebijakan Privasi & Penghapusan Data</a>
             </div>
         </div>
     </footer>
@@ -172,7 +167,7 @@
                     });
 
                     PushNotifications.addListener('pushNotificationReceived', (notification) => {
-                        alert("Informasi Baru:\n" + notification.title + "\n" + notification.body);
+                         alert("Informasi Baru:\n" + notification.title + "\n" + notification.body);
                     });
 
                     await PushNotifications.register();
@@ -187,5 +182,4 @@
         }
     </script>
 </body>
-
 </html>

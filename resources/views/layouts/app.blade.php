@@ -3,10 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/logo-pmi-kecil.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', config('app.name', 'Global Medical Care Indonesia'))</title>
+    <title>@yield('title', config('app.name', 'Ambulance Dispatch PMI Kabupaten Bekasi'))</title>
 
     <!-- Tailwind CSS (CDN, tanpa Vite) -->
     <script src="https://cdn.tailwindcss.com"></script>
