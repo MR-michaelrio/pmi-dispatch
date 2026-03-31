@@ -79,6 +79,9 @@ class AmbulanceController extends Controller
             unset($validated['password']);
         }
 
+        // Ensure username stays in sync with code
+        $validated['username'] = $validated['code'];
+
         $ambulance->update($validated);
 
         return redirect()
