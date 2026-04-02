@@ -78,6 +78,11 @@
                             @endforeach
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Petugas Lapangan (Selain Driver)</label>
+                        <textarea name="duty_personnel" rows="2" placeholder="Input nama petugas tambahan..."
+                                  class="w-full rounded-lg border-gray-300 text-sm font-bold focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+                    </div>
                     <button type="submit" id="assign-btn"
                             class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl shadow transition active:scale-95 disabled:opacity-50 text-sm">
                         <span id="assign-text">✅ TUGASKAN UNIT</span>
@@ -185,6 +190,7 @@
                                             <input type="hidden" name="driver_id"        id="modal-driver-{{ $d->id }}">
                                             <input type="hidden" name="replacement_date" id="modal-date-{{ $d->id }}">
                                             <input type="hidden" name="reason"           id="modal-reason-{{ $d->id }}">
+                                            <input type="hidden" name="duty_personnel"   id="modal-personnel-{{ $d->id }}">
                                         </form>
                                     @endif
                                 </div>
@@ -245,9 +251,13 @@
                        class="w-full rounded-xl border-gray-300 font-bold focus:ring-orange-500 focus:border-orange-500">
             </div>
             <div>
-                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Alasan Penggantian (Opsional)</label>
                 <input type="text" id="modal-reason-input" placeholder="Contoh: Unit mengalami kerusakan"
                        class="w-full rounded-xl border-gray-300 font-bold focus:ring-orange-500 focus:border-orange-500">
+            </div>
+            <div>
+                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Petugas Lapangan Baru (Opsional)</label>
+                <textarea id="modal-personnel-input" rows="2" placeholder="Input nama petugas tambahan..."
+                          class="w-full rounded-xl border-gray-300 font-bold focus:ring-orange-500 focus:border-orange-500"></textarea>
             </div>
             <button onclick="submitReplaceModal()"
                     class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-3 rounded-xl shadow-lg transition active:scale-95 text-sm mt-2">
@@ -279,6 +289,7 @@
 
         document.getElementById('modal-date-input').value = defaultDate;
         document.getElementById('modal-reason-input').value = '';
+        document.getElementById('modal-personnel-input').value = '';
         document.getElementById('replace-modal').classList.remove('hidden');
     }
 
@@ -292,6 +303,7 @@
         const drvVal    = document.getElementById('modal-drv-select').value;
         const dateVal   = document.getElementById('modal-date-input').value;
         const reasonVal = document.getElementById('modal-reason-input').value;
+        const personnelVal = document.getElementById('modal-personnel-input').value;
 
         if (!dateVal) {
             alert('Pilih tanggal efektif terlebih dahulu.');
@@ -303,6 +315,7 @@
         document.getElementById('modal-driver-'    + activeDispatchId).value = drvVal;
         document.getElementById('modal-date-'      + activeDispatchId).value = dateVal;
         document.getElementById('modal-reason-'    + activeDispatchId).value = reasonVal;
+        document.getElementById('modal-personnel-' + activeDispatchId).value = personnelVal;
 
         document.getElementById('replace-form-' + activeDispatchId).submit();
     }

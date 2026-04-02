@@ -37,6 +37,13 @@
             </div>
 
             <div>
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Petugas Lapangan</label>
+                <p class="text-md font-medium text-gray-900 mt-1 bg-gray-50 p-2 rounded border border-gray-100 whitespace-pre-line">
+                    {{ $dispatch->duty_personnel ?: 'Hanya Driver' }}
+                </p>
+            </div>
+
+            <div>
                 <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider">Jadwal</label>
                 <p class="text-md font-bold text-gray-900 mt-1">
                     {{ $dispatch->request_date?->format('d F Y') ?? '-' }}
@@ -68,6 +75,37 @@
                 </div>
             </div>
             
+            {{-- Dokumentasi Foto --}}
+            <div class="border-t pt-4">
+                <label class="block text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">📸 Dokumentasi Foto</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <span class="text-[10px] font-black text-gray-400 uppercase block mb-1">Unit Bertugas</span>
+                        @if($dispatch->unit_photo)
+                            <a href="{{ asset('storage/' . $dispatch->unit_photo) }}" target="_blank">
+                                <img src="{{ asset('storage/' . $dispatch->unit_photo) }}" class="w-full aspect-video object-cover rounded-lg shadow-sm hover:opacity-90 transition border border-gray-200">
+                            </a>
+                        @else
+                            <div class="w-full aspect-video bg-gray-50 border-2 border-dashed border-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-[10px] font-bold text-center px-4">
+                                Belum ada foto unit
+                            </div>
+                        @endif
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black text-gray-400 uppercase block mb-1">Foto Kegiatan</span>
+                        @if($dispatch->activity_photo)
+                            <a href="{{ asset('storage/' . $dispatch->activity_photo) }}" target="_blank">
+                                <img src="{{ asset('storage/' . $dispatch->activity_photo) }}" class="w-full aspect-video object-cover rounded-lg shadow-sm hover:opacity-90 transition border border-gray-200">
+                            </a>
+                        @else
+                            <div class="w-full aspect-video bg-gray-50 border-2 border-dashed border-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-[10px] font-bold text-center px-4">
+                                Belum ada foto kegiatan
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Maps Card (Kanan) -->

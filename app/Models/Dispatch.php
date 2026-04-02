@@ -33,6 +33,9 @@ class Dispatch extends Model
         'event_request_id',
         'is_replacement',
         'replaced_dispatch_id',
+        'duty_personnel',
+        'activity_photo',
+        'unit_photo',
     ];
 
     protected function casts(): array

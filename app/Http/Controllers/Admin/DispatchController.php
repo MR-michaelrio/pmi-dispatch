@@ -44,6 +44,7 @@ class DispatchController extends Controller
             'ambulance_id' => 'required',
             'trip_type' => 'nullable|in:one_way,round_trip',
             'return_address' => 'nullable',
+            'duty_personnel' => 'nullable|string',
         ]) + [
             'status' => 'assigned',
             'assigned_at' => now(),

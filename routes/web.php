@@ -202,4 +202,7 @@ Route::middleware(['auth:ambulance'])->prefix('driver')->name('driver.')->group(
     
     // Save FCM Token
     Route::post('/fcm-token', [DriverDashboardController::class, 'saveFcmToken'])->name('fcm-token.save');
+
+    // Upload Documentation Photo
+    Route::post('/dispatches/{dispatch}/upload-photo', [DriverDashboardController::class, 'uploadPhoto'])->name('dispatches.upload-photo');
 });

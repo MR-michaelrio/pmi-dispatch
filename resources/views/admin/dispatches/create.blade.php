@@ -127,6 +127,12 @@
             </div>
         </div>
 
+        <div class="border-t border-gray-50 pt-6">
+            <label class="block text-sm font-bold text-gray-700 mb-1">Petugas Lapangan (Selain Driver)</label>
+            <textarea name="duty_personnel" rows="2" placeholder="Input nama petugas tambahan yang bertugas..."
+                      class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500">{{ old('duty_personnel') }}</textarea>
+        </div>
+
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6">
             <a href="{{ route('admin.dispatches.index') }}" 
                class="text-gray-600 hover:text-gray-800 font-bold w-full sm:w-auto text-center">

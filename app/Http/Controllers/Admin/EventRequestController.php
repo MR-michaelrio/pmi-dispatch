@@ -111,6 +111,7 @@ class EventRequestController extends Controller
             'assigned_at'      => now(),
             'request_date'     => $eventRequest->start_date,
             'is_replacement'   => false,
+            'duty_personnel'   => $request->duty_personnel,
         ]);
 
         // Mark ambulance/driver as on_duty
@@ -137,6 +138,7 @@ class EventRequestController extends Controller
             'driver_id'        => 'nullable|exists:drivers,id',
             'replacement_date' => 'required|date|after_or_equal:' . $eventRequest->start_date->format('Y-m-d') . '|before_or_equal:' . $eventRequest->end_date->format('Y-m-d'),
             'reason'           => 'nullable|string|max:500',
+            'duty_personnel'   => 'nullable|string',
         ]);
 
         // Fallback to current values if not provided
@@ -176,6 +178,7 @@ class EventRequestController extends Controller
             'request_date'        => $request->replacement_date,
             'is_replacement'      => true,
             'replaced_dispatch_id'=> $dispatch->id,
+            'duty_personnel'      => $request->duty_personnel ?: $dispatch->duty_personnel,
         ]);
 
         // Update status only for the new/kept ones

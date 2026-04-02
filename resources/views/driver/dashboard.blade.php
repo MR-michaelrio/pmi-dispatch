@@ -78,11 +78,62 @@
                     <p class="font-medium text-gray-800 leading-snug">{{ $activeDispatch->destination }}</p>
                 </div>
 
+                <div class="border-t border-gray-50 pt-3">
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Petugas Lapangan</span>
+                    <p class="font-medium text-gray-800 leading-snug whitespace-pre-line">{{ $activeDispatch->duty_personnel ?: 'Hanya Driver' }}</p>
+                </div>
+
                 <div>
                     <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Status</span>
                     <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-[10px] font-black uppercase tracking-wider">
                         {{ str_replace('_', ' ', $activeDispatch->status) }}
                     </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dokumentasi Foto -->
+        <div class="bg-white rounded-lg shadow p-4 mb-4">
+            <h2 class="font-bold text-lg mb-3">📸 Dokumentasi Foto</h2>
+            <div class="grid grid-cols-2 gap-4">
+                {{-- Foto Unit --}}
+                <div class="flex flex-col items-center">
+                    <label class="w-full">
+                        <div id="unit-photo-container" class="aspect-video w-full bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition overflow-hidden relative">
+                            @if($activeDispatch->unit_photo)
+                                <img src="{{ asset('storage/' . $activeDispatch->unit_photo) }}" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-2xl mb-1">🚑</span>
+                                <span class="text-[10px] font-bold text-gray-500 uppercase">Foto Unit</span>
+                            @endif
+                            <input type="file" accept="image/*" capture="environment" class="hidden" onchange="uploadDispatchPhoto(this, 'unit')">
+                            
+                            <div class="upload-loading absolute inset-0 bg-white/80 hidden items-center justify-center">
+                                <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </div>
+                        </div>
+                    </label>
+                    <span class="text-[9px] font-black text-gray-400 mt-1 uppercase text-center">Unit Bertugas</span>
+                </div>
+
+                {{-- Foto Kegiatan --}}
+                <div class="flex flex-col items-center">
+                    <label class="w-full">
+                        <div id="activity-photo-container" class="aspect-video w-full bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition overflow-hidden relative">
+                            @if($activeDispatch->activity_photo)
+                                <img src="{{ asset('storage/' . $activeDispatch->activity_photo) }}" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-2xl mb-1">📸</span>
+                                <span class="text-[10px] font-bold text-gray-500 uppercase">Foto Kegiatan</span>
+                            @endif
+                            <input type="file" accept="image/*" capture="environment" class="hidden" onchange="uploadDispatchPhoto(this, 'activity')">
+                            
+                            <div class="upload-loading absolute inset-0 bg-white/80 hidden items-center justify-center">
+                                <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </div>
+                        </div>
+                    </label>
+                    <span class="text-[9px] font-black text-gray-400 mt-1 uppercase text-center">Foto Kegiatan</span>
                 </div>
             </div>
         </div>
@@ -249,6 +300,56 @@
 <script src="https://unpkg.com/@capacitor/core@latest/dist/capacitor.js"></script>
 
 <script>
+async function uploadDispatchPhoto(input, type) {
+    if (!input.files || !input.files[0]) return;
+
+    const file = input.files[0];
+    const container = document.getElementById(type + '-photo-container');
+    const loading = container.querySelector('.upload-loading');
+
+    // Show loading
+    loading.classList.remove('hidden');
+    loading.classList.add('flex');
+
+    const formData = new FormData();
+    formData.append('photo', file);
+    formData.append('type', type);
+
+    try {
+        const response = await fetch(`/driver/dispatches/{{ $activeDispatch->id ?? 0 }}/upload-photo`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+        
+        loading.classList.add('hidden');
+        loading.classList.remove('flex');
+
+        if (data.success) {
+            // Update preview
+            container.innerHTML = `
+                <img src="${data.path}" class="w-full h-full object-cover">
+                <input type="file" accept="image/*" capture="environment" class="hidden" onchange="uploadDispatchPhoto(this, '${type}')">
+                <div class="upload-loading absolute inset-0 bg-white/80 hidden items-center justify-center">
+                    <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                </div>
+            `;
+        } else {
+            alert('Gagal upload: ' + data.message);
+        }
+    } catch (err) {
+        loading.classList.add('hidden');
+        loading.classList.remove('flex');
+        console.error(err);
+        alert('Terjadi kesalahan saat upload.');
+    }
+}
+
 let trackingActive = false;
 let watchId = null;
 const ambulanceId = {{ auth('ambulance')->id() }};

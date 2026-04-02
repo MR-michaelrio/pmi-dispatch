@@ -228,4 +228,35 @@ class DriverDashboardController extends Controller
 
         return response()->json(['success' => false], 401);
     }
+
+    public function uploadPhoto(Request $request, Dispatch $dispatch)
+    {
+        // Security check
+        if ($dispatch->ambulance_id !== auth('ambulance')->id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'type' => 'required|in:activity,unit',
+            'photo' => 'required|image|max:5120', // Max 5MB
+        ]);
+
+        $type = $request->type; // activity or unit
+        $file = $request->file('photo');
+        
+        $filename = $type . '_' . $dispatch->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('dispatches/photos', $filename, 'public');
+
+        if ($type === 'activity') {
+            $dispatch->update(['activity_photo' => $path]);
+        } else {
+            $dispatch->update(['unit_photo' => $path]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'path' => asset('storage/' . $path),
+            'message' => 'Foto berhasil diunggah'
+        ]);
+    }
 }
