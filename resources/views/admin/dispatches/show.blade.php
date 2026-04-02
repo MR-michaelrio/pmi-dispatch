@@ -10,9 +10,14 @@
         <h1 class="text-2xl font-bold text-gray-800">
             📋 Detail Dispatch #{{ $dispatch->id }}
         </h1>
-        <a href="{{ route('admin.dispatches.index') }}" class="text-gray-600 hover:text-gray-800 font-bold">
-            ← Kembali
-        </a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.dispatches.edit', $dispatch) }}" class="text-blue-600 hover:text-blue-800 font-bold border border-blue-200 rounded-lg px-3 py-2 hover:bg-blue-50 transition">
+                ✏️ Edit Dispatch
+            </a>
+            <a href="{{ route('admin.dispatches.index') }}" class="text-gray-600 hover:text-gray-800 font-bold">
+                ← Kembali
+            </a>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

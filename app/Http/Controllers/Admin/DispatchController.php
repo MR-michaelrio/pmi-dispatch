@@ -77,6 +77,30 @@ class DispatchController extends Controller
         return view('admin.dispatches.show', compact('dispatch'));
     }
 
+    public function edit(Dispatch $dispatch)
+    {
+        $dispatch->load(['driver', 'ambulance']);
+        return view('admin.dispatches.edit', compact('dispatch'));
+    }
+
+    public function update(Request $request, Dispatch $dispatch)
+    {
+        $validated = $request->validate([
+            'patient_name' => 'required|string|max:255',
+            'pickup_address' => 'required|string',
+            'destination' => 'nullable|string',
+            'duty_personnel' => 'nullable|string',
+            'patient_condition' => 'required|string',
+            'request_date' => 'required|date',
+            'pickup_time' => 'required',
+        ]);
+
+        $dispatch->update($validated);
+
+        return redirect()->route('admin.dispatches.show', $dispatch)
+            ->with('success', 'Data dispatch berhasil diperbarui.');
+    }
+
     public function next(Dispatch $dispatch)
     {
         $flow = [
