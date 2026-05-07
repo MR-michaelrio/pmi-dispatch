@@ -135,7 +135,7 @@
             © {{ date('Y') }} Al-Aqsho Peduli.<br>
             Supported by Global Medical Care Indonesia.<br>
             Sistem Dispatch Ambulans — Untuk Kemanusiaan.<br>
-            <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: +62 895-3766-76777</div>
+            <div class="mt-4 font-bold text-slate-100">Layanan 24 Jam: +0813-8328-0108 / 0857-1792-3717</div>
             <div class="mt-4">
                 <a href="{{ route('privacy') }}" class="text-xs hover:text-white underline">Kebijakan Privasi & Penghapusan Data</a>
             </div>

@@ -26,7 +26,7 @@
                     <h3 class="font-bold text-emerald-800 mb-1 font-sm uppercase tracking-wider">Cara Mengajukan Penghapusan:</h3>
                     <p class="text-emerald-700">
                         Silakan hubungi Administrator kami melalui:
-                        <br><strong>WhatsApp:</strong> +62 895-3766-76777
+                        <br><strong>WhatsApp:</strong> +0813-8328-0108 / 0857-1792-3717
                         <br><strong>Email:</strong> iptrunkbackup@gmail.com (Subject: Request Hapus Akun)
                     </p>
                 </div>

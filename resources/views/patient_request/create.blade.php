@@ -181,7 +181,7 @@
     <!-- Footer Info -->
     <div class="mt-8 text-center text-sm text-gray-600">
         <p>Kami akan menghubungi Anda secepatnya setelah permintaan diterima.</p>
-        <p class="mt-2 text-lg font-bold">Layanan 24 Jam: <a href="tel:+62895376676777" class="text-emerald-600">+62 895-3766-76777</a></p>
+        <p class="mt-2 text-lg font-bold">Layanan 24 Jam: <a href="tel:+62895376676777" class="text-emerald-600">+0813-8328-0108 / 0857-1792-3717</a></p>
     </div>
 
 </div>
