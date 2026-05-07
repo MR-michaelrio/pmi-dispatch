@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Driver Dashboard | PMI Kabupaten Bekasi</title>
+    <title>Driver Dashboard | Al-Aqsho Peduli</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
@@ -537,7 +537,7 @@ async function startTracking() {
         try {
             watchId = await BackgroundGeolocation.addWatcher(
                 {
-                    backgroundMessage: "PMI Kabupaten Bekasi sedang melacak lokasi ambulans...",
+                    backgroundMessage: "Al-Aqsho Peduli sedang melacak lokasi ambulans...",
                     backgroundTitle: "Tracking Aktif",
                     requestPermissions: true,
                     stale: false,

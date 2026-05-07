@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Driver | PMI Kabupaten Bekasi Dispatch')
+@section('title', 'Edit Driver | Al-Aqsho Peduli Dispatch')
 
 @section('content')
 <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">

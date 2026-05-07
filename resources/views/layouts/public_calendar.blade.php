@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jadwal Unit | PMI Kabupaten Bekasi</title>
+    <title>Jadwal Unit | Al-Aqsho Peduli</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta http-equiv="refresh" content="60"> {{-- Auto Refresh every 60s --}}
 </head>
@@ -11,8 +11,8 @@
     <header class="bg-white border-b shadow-sm py-4 mb-6">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('logo-pmi.png') }}" alt="PMI Kabupaten Bekasi Logo" class="h-8">
-                <span class="font-bold text-gray-700">Jadwal Operasional PMI Kabupaten Bekasi</span>
+                <img src="{{ asset('logo-al-aqsho.jpeg') }}" alt="Al-Aqsho Peduli Logo" class="h-8">
+                <span class="font-bold text-gray-700">Jadwal Operasional Al-Aqsho Peduli</span>
             </div>
             <a href="{{ route('portal') }}" class="text-emerald-600 font-bold text-sm">← Kembali ke Portal</a>
         </div>
@@ -23,7 +23,7 @@
     </main>
 
     <footer class="py-8 text-center text-xs text-gray-400">
-        © {{ date('Y') }} PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.
+        © {{ date('Y') }} Al-Aqsho Peduli. Supported by Global Medical Care Indonesia.
     </footer>
 </body>
 </html>

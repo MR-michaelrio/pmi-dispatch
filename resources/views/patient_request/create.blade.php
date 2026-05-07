@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Permintaan Layanan | PMI Kabupaten Bekasi</title>
+    <title>Form Permintaan Layanan | Al-Aqsho Peduli</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
@@ -16,7 +16,7 @@
             🚑 Form Permintaan Layanan
         </h1>
         <p class="text-gray-600">
-            PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.
+            Al-Aqsho Peduli. Supported by Global Medical Care Indonesia.
         </p>
     </div>
 

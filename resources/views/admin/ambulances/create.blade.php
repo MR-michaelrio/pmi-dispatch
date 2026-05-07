@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Ambulans | PMI Kabupaten Bekasi Dispatch')
+@section('title', 'Tambah Ambulans | Al-Aqsho Peduli Dispatch')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -11,7 +11,7 @@
             ➕ Tambah Ambulans
         </h1>
         <p class="text-gray-500 text-sm mt-1">
-            Masukkan data ambulans baru PMI Kabupaten Bekasi
+            Masukkan data ambulans baru Al-Aqsho Peduli
         </p>
     </div>
 
@@ -38,7 +38,7 @@
                     Kode Ambulans
                 </label>
                 <input type="text" name="code" required
-                       placeholder="PMI Kabupaten Bekasi-A01"
+                       placeholder="Al-Aqsho Peduli-A01"
                        value="{{ old('code') }}"
                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             </div>

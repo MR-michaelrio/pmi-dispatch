@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Permintaan Pasien | PMI Kabupaten Bekasi Admin')
+@section('title', 'Permintaan Pasien | Al-Aqsho Peduli Admin')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

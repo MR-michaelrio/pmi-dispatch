@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">PMI Kabupaten Bekasi DISPATCH</string>
-    <string name="title_activity_main">PMI Kabupaten Bekasi DISPATCH</string>
-    <string name="package_name">com.pmikabbekasi.dispatch</string>
-    <string name="custom_url_scheme">com.pmikabbekasi.dispatch</string>
+    <string name="app_name">Al-Aqsho Peduli DISPATCH</string>
+    <string name="title_activity_main">Al-Aqsho Peduli DISPATCH</string>
+    <string name="package_name">com.alaqsho.dispatch</string>
+    <string name="custom_url_scheme">com.alaqsho.dispatch</string>
 </resources>

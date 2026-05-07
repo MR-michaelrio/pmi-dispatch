@@ -6,9 +6,9 @@ const config: CapacitorConfig = {
   webDir: 'public',
   server: {
     androidScheme: 'https',
-    url: 'https://alaqsho.my.id',
+    url: 'https://al-aqsho.my.id',
     allowNavigation: [
-      'alaqsho.my.id'
+      'al-aqsho.my.id'
     ],
     cleartext: true
   }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User | PMI Kabupaten Bekasi Admin')
+@section('title', 'Edit User | Al-Aqsho Peduli Admin')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,7 +11,7 @@
             ✏️ Edit User
         </h1>
         <p class="text-gray-500 text-sm mt-1">
-            Perbarui data akun pengguna sistem PMI Kabupaten Bekasi
+            Perbarui data akun pengguna sistem Al-Aqsho Peduli
         </p>
     </div>
 

@@ -32,7 +32,7 @@
 
 <div class="header">
     <h1>{{ $title }}</h1>
-    <p>PMI Kabupaten Bekasi AMBULANCE DISPATCH SYSTEM</p>
+    <p>Al-Aqsho Peduli AMBULANCE DISPATCH SYSTEM</p>
     <p>Periode: 
         @if($range === 'today') {{ now()->format('d F Y') }}
         @elseif($range === 'week') {{ now()->startOfWeek()->format('d M') }} - {{ now()->endOfweek()->format('d M Y') }}
@@ -99,7 +99,7 @@
 </table>
 
 <div class="footer">
-    Dicetak pada: {{ now()->format('d-m-Y H:i:s') }} | PMI Kabupaten Bekasi Ambulance Dispatch
+    Dicetak pada: {{ now()->format('d-m-Y H:i:s') }} | Al-Aqsho Peduli Ambulance Dispatch
 </div>
 
 </body>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Ambulans | PMI Kabupaten Bekasi Dispatch')
+@section('title', 'Edit Ambulans | Al-Aqsho Peduli Dispatch')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,7 +11,7 @@
             ✏️ Edit Ambulans
         </h1>
         <p class="text-gray-500 text-sm mt-1">
-            Perbarui data ambulans PMI Kabupaten Bekasi
+            Perbarui data ambulans Al-Aqsho Peduli
         </p>
     </div>
 

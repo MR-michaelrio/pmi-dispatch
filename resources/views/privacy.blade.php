@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Kebijakan Privasi & Penghapusan Data | PMI Kabupaten Bekasi</title>
+    <title>Kebijakan Privasi & Penghapusan Data | Al-Aqsho Peduli</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -10,9 +10,9 @@
 
     <div class="max-w-3xl mx-auto px-6 py-12">
         <div class="text-center mb-10">
-            <img src="{{ asset('logo-pmi.png') }}" alt="PMI Kabupaten Bekasi Logo" class="h-16 mx-auto mb-4">
+            <img src="{{ asset('logo-al-aqsho.jpeg') }}" alt="Al-Aqsho Peduli Logo" class="h-16 mx-auto mb-4">
             <h1 class="text-3xl font-extrabold text-gray-900">Kebijakan Privasi & Penghapusan Data</h1>
-            <p class="text-gray-500 mt-2">PMI Kabupaten Bekasi Dispatch (Supported by Global Medical Care Indonesia)</p>
+            <p class="text-gray-500 mt-2">Al-Aqsho Peduli Dispatch (Supported by Global Medical Care Indonesia)</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
@@ -20,7 +20,7 @@
             <section>
                 <h2 class="text-xl font-bold text-gray-800 mb-3 underline decoration-emerald-500">1. Penghapusan Akun & Data</h2>
                 <p class="leading-relaxed text-gray-600 mb-4">
-                    Demi keamanan operasional, akun aplikasi PMI Kabupaten Bekasi Dispatch (Admin dan Driver) dikelola secara terpusat oleh administrator. Kami menyediakan hak bagi pengguna untuk meminta penghapusan akun dan seluruh data terkait.
+                    Demi keamanan operasional, akun aplikasi Al-Aqsho Peduli Dispatch (Admin dan Driver) dikelola secara terpusat oleh administrator. Kami menyediakan hak bagi pengguna untuk meminta penghapusan akun dan seluruh data terkait.
                 </p>
                 <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
                     <h3 class="font-bold text-emerald-800 mb-1 font-sm uppercase tracking-wider">Cara Mengajukan Penghapusan:</h3>
@@ -61,7 +61,7 @@
 
         <div class="mt-12 text-center text-sm text-gray-400">
             <a href="/" class="text-emerald-600 font-bold hover:underline"> Kembali ke Beranda</a>
-            <p class="mt-4">© {{ date('Y') }} PMI Kabupaten Bekasi. Supported by Global Medical Care Indonesia.</p>
+            <p class="mt-4">© {{ date('Y') }} Al-Aqsho Peduli. Supported by Global Medical Care Indonesia.</p>
         </div>
     </div>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Ambulance Dispatch PMI Kabupaten Bekasi') }}</title>
+    <title>{{ config('app.name', 'Ambulance Dispatch Al-Aqsho Peduli') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -21,7 +21,7 @@
         </h1>
 
         <p class="text-gray-600 mb-6 text-center max-w-md">
-            Sistem dispatch ambulans PMI Kabupaten Bekasi.
+            Sistem dispatch ambulans Al-Aqsho Peduli.
             Supported by Global Medical Care Indonesia.
         </p>
 
