@@ -145,10 +145,27 @@ class DispatchController extends Controller
 
     public function destroy(Dispatch $dispatch)
     {
+        // Free up ambulance and driver if they were on duty for THIS dispatch
+        if ($dispatch->status !== 'completed') {
+            if ($dispatch->ambulance_id) {
+                $dispatch->ambulance->update(['status' => 'ready']);
+            }
+            if ($dispatch->driver_id) {
+                $dispatch->driver->update(['status' => 'available']);
+            }
+        }
+
+        // Reset any linked PatientRequest
+        \App\Models\PatientRequest::where('dispatch_id', $dispatch->id)
+            ->update([
+                'status' => 'pending',
+                'dispatch_id' => null
+            ]);
+
         $dispatch->logs()->delete();
         $dispatch->delete();
 
-        return back();
+        return back()->with('success', 'Dispatch berhasil dihapus dan status unit telah dikembalikan.');
     }
 
     // ✅ EXPORT PDF
